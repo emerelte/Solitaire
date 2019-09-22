@@ -1,0 +1,12 @@
+.span-middle {
+    font-size: 1vw;
+}
+
+.card-corner {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    height: 10%;
+    width: 100%;
+    text-align: center;
+}

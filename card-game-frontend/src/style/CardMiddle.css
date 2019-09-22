@@ -1,0 +1,104 @@
+.card-middle-column {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 80%;
+}
+
+.card-middle-row {
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+}
+
+.div-middle {
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+
+.div-two {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    height: 50%;
+    width: 100%;
+    font-size: 2.5vw;
+}
+
+.div-three {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    height: 33%;
+    width: 100%;
+    font-size: 2.5vw;
+}
+
+.div-four-outer {
+    display: flex;
+    flex-direction: row;
+    height: 50%;
+    width: 100%;
+}
+
+.div-four-inner {
+    height: 100%;
+    width: 50%;
+    justify-content: center;
+    display: flex;
+    flex-direction: row;
+    font-size: 2.5vw;
+}
+
+.div-six-outer, .div-five-outer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    height: 33%;
+    width: 100%;
+}
+
+.div-six-inner, .div-five-inner {
+    height: 100%;
+    width: 50%;
+    justify-content: center;
+    display: flex;
+    flex-direction: row;
+    font-size: 2.5vw;
+}
+
+.div-ten-outer, .div-nine-outer, .div-eight-outer, .div-seven-outer {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 33%;
+}
+
+.div-eight-inner, .div-seven-inner {
+    height: 33%;
+    width: 100%;
+    justify-content: center;
+    font-size: 2.5vw;
+    display: flex;
+    flex-direction: row;
+}
+
+.div-ten-inner, .div-nine-inner {
+    height: 25%;
+    width: 100%;
+    justify-content: center;
+    display: flex;
+    flex-direction: row;
+    font-size: 2.5vw;
+}
+
+.down-shifted {
+    margin-top: 100%;
+}
+
+.up-shifted {
+    margin-bottom: 100%;
+}

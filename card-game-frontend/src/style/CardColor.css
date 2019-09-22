@@ -1,0 +1,12 @@
+.color-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.color-span {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
