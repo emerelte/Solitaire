@@ -6,18 +6,19 @@ import CardSide from "./CardSide";
 export default class Card extends React.Component {
     state = {
         fontCol: 'black',
-        hidden: false
+        hidden: this.props.hidden
     };
 
     flipCard = () => {
         const currState = this.state.hidden;
         this.setState({'hidden': !currState});
-        console.log(this);
+    };
 
+    hideCard = () => {
+        this.setState({'hidden': true});
     };
 
     render = () => {
-
         switch (this.props.color) {
             case "spades":
             case "clubs":
@@ -31,11 +32,11 @@ export default class Card extends React.Component {
                 this.state.fontCol = 'black';
         }
         if (this.state.hidden)
-            return <div onClick={this.flipCard} style={{color: this.state.fontCol}}
+            return <div style={{color: this.state.fontCol}}
                         className={"card back"}>
             </div>;
         else
-            return <div onClick={this.flipCard} style={{color: this.state.fontCol}}
+            return <div style={{color: this.state.fontCol}}
                         className={"card"}>
                 <CardSide value={this.props.value} color={this.props.color}/>
                 <CardMiddle value={this.props.value} color={this.props.color}/>
