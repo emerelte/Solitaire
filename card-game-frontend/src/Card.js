@@ -4,8 +4,12 @@ import CardMiddle from './CardMiddle.js'
 import CardSide from "./CardSide";
 
 export default class Card extends React.Component {
+    findFontColor = (color) => {
+        return this.props.color === 'spades' || this.props.color === 'clubs' ? 'black' : 'red';
+    };
+
     state = {
-        fontCol: 'black',
+        fontCol: this.findFontColor(this.props.color),
         hidden: this.props.hidden
     };
 
@@ -19,18 +23,6 @@ export default class Card extends React.Component {
     };
 
     render = () => {
-        switch (this.props.color) {
-            case "spades":
-            case "clubs":
-                this.state.fontCol = 'black';
-                break;
-            case "diams":
-            case "hearts":
-                this.state.fontCol = 'red';
-                break;
-            default:
-                this.state.fontCol = 'black';
-        }
         if (this.state.hidden)
             return <div style={{color: this.state.fontCol}}
                         className={"card back"}>

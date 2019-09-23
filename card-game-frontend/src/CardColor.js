@@ -34,6 +34,10 @@ export default class CardColor extends React.Component {
                     </span>
                     </div>
                 );
+            default:
+                return (
+                    <div style={{fontSize: this.props.fontSize}} className={'color-div'}/>
+                )
         }
 
     }
