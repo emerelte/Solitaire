@@ -16,20 +16,20 @@ export default class App extends React.Component {
         return cardDeck;
     };
 
-    shuffle = (a) => {
+    shuffleArray = (arr) => {
         let j, x, i;
-        for (i = a.length - 1; i > 0; i--) {
+        for (i = arr.length - 1; i > 0; i--) {
             j = Math.floor(Math.random() * (i + 1));
-            x = a[i];
-            a[i] = a[j];
-            a[j] = x;
+            x = arr[i];
+            arr[i] = arr[j];
+            arr[j] = x;
         }
-        return a;
+        return arr;
     };
 
     createSolitaireColumns() {
         let cardDeck = this.createCardDeck();
-        cardDeck = this.shuffle(cardDeck);
+        cardDeck = this.shuffleArray(cardDeck);
         let cardsPlacedInColumns = cardDeck.slice(0,7*4);
         const elements = [];
         for (let i=0; i<7; ++i) {
@@ -41,7 +41,7 @@ export default class App extends React.Component {
             const innItem = [];
             for (const [cardIndex, card] of solitaire_column.entries()) {
                 if (cardIndex === solitaire_column.length - 1)
-                    innItem.push(<div key={10*colIndex + cardIndex} style={{height: '20px'}}>
+                    innItem.push(<div className={"draggable"} key={10*colIndex + cardIndex} style={{height: '20px'}}>
                         <Card hidden={false} value={card['value']} color={card['color']}/>
                     </div>);
                 else
