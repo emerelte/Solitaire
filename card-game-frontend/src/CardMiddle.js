@@ -373,7 +373,7 @@ export default class CardMiddle extends React.Component {
             default:
                 return (
                     <div className={"card-middle-column"}>
-                        <div>3</div>
+                        <div></div>
                     </div>
                 );
         }

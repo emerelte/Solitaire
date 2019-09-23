@@ -1,16 +1,20 @@
 import React from 'react';
 import './style/App.css';
 import Card from "./Card";
+import HTML5Backend from 'react-dnd-html5-backend'
+import {DragDropContext} from 'react-dnd'
 
 
-export default class App extends React.Component {
+class App extends React.Component {
 
     createCardDeck = () => {
         let cardDeck = [];
         const listOfColors = ['spades', 'clubs', 'hearts', 'diams'];
+        let i=0;
         for (const color of listOfColors) {
             for (let val = 1; val < 14; ++val) {
-                cardDeck.push({'color': color, 'value': val});
+                cardDeck.push({'color': color, 'value': val, 'id': i});
+                ++i;
             }
         }
         return cardDeck;
@@ -27,43 +31,51 @@ export default class App extends React.Component {
         return arr;
     };
 
-    createSolitaireColumns() {
+    createSolitaireColumns = () => {
         let cardDeck = this.createCardDeck();
         cardDeck = this.shuffleArray(cardDeck);
-        let cardsPlacedInColumns = cardDeck.slice(0,7*4);
-        const elements = [];
-        for (let i=0; i<7; ++i) {
-            let cardsInColumn = cardsPlacedInColumns.slice(i*4, (i+1)*4);
-            elements.push(cardsInColumn);
+        let cardsPlacedInColumns = cardDeck.slice(0, 7 * 4);
+        let colOfCards = [];
+        for (let i = 0; i < 7; ++i) {
+            let cardsInColumn = cardsPlacedInColumns.slice(i * 4, (i + 1) * 4);
+            colOfCards.push(cardsInColumn);
         }
-        const solitaireColumns = [];
-        for (const [colIndex, solitaire_column] of elements.entries()) {
-            const innItem = [];
-            for (const [cardIndex, card] of solitaire_column.entries()) {
-                if (cardIndex === solitaire_column.length - 1)
-                    innItem.push(<div className={"draggable"} key={10*colIndex + cardIndex} style={{height: '20px'}}>
-                        <Card hidden={false} value={card['value']} color={card['color']}/>
-                    </div>);
-                else
-                    innItem.push(<div key={10*colIndex + cardIndex} style={{height: '20px'}}>
-                        <Card hidden={false} value={card['value']} color={card['color']}/>
-                    </div>);
+        return colOfCards;
+    };
+
+    state = {
+        columnsOfCards: this.createSolitaireColumns()
+    };
+
+    deleteItem = id => {
+        this.setState(prevState => {
+            return {
+                columnsOfCards: prevState.columnsOfCards.filter(item => item.id !== id)
             }
-            solitaireColumns.push(<div key={colIndex} className={"solitaire-column"}>{innItem}</div>);
-        }
-        return solitaireColumns;
-    }
+        })
+    };
 
     render = () => {
-        const solitaireColumns = this.createSolitaireColumns();
         return (
             <div className="card-game-table">
                 <div className="wide-row">
-                    {solitaireColumns}
+                    {this.state.columnsOfCards.map((item, index) => (
+                        <div key={index} className={"solitaire-column"}>
+                            {item.map((item, index) => (
+                                <div key = {item['id']} className={"card-box"}>
+                                    <Card item={item} handleDrop={(id) => this.deleteItem(id)} hidden={false} value={item['value']}
+                                          color={item['color']}/>
+                                </div>
+                            ))}
+                        </div>
+                    ))}
                 </div>
                 <div className="narrow-row">
+                    <Card/>
                 </div>
             </div>
         );
     };
 }
+
+export default DragDropContext(HTML5Backend)(App);
