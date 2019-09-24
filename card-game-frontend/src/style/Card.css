@@ -20,8 +20,13 @@
     box-shadow: .2em .2em .5em #333;
 }
 
-.card:hover {
+/*.card:hover {*/
+/*    cursor: pointer;*/
+/*}*/
+
+.draggable:hover {
     cursor: pointer;
+
 }
 
 .card.back {

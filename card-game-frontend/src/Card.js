@@ -3,18 +3,15 @@ import './style/Card.css';
 import CardMiddle from './CardMiddle.js'
 import CardSide from "./CardSide";
 import {DragSource} from "react-dnd";
+import PropTypes from 'prop-types';
 
 const itemSource = {
     beginDrag(props) {
-        console.log('dragging');
+        props.createTargets();
         return props.item;
     },
-    endDrag(props, monitor, component) {
-        if (!monitor.didDrop()) {
-            return;
-        }
-
-        return props.handleDrop(props.item.id);
+    endDrag(props) {
+        props.deleteTargets();
     }
 };
 
@@ -27,36 +24,30 @@ function collect(connect, monitor) {
 }
 
 class Card extends React.Component {
+
+    static propTypes = {
+        createTargets: PropTypes.func.isRequired,
+        deleteTargets: PropTypes.func.isRequired
+    };
+
     findFontColor = (color) => {
         return this.props.color === 'spades' || this.props.color === 'clubs' ? 'black' : 'red';
     };
 
     state = {
         fontCol: this.findFontColor(this.props.color),
-        hidden: this.props.hidden
-    };
-
-    flipCard = () => {
-        const currState = this.state.hidden;
-        this.setState({'hidden': !currState});
-    };
-
-    hideCard = () => {
-        this.setState({'hidden': true});
     };
 
     render = () => {
-        const { isDragging, connectDragSource, item } = this.props;
-        const opacity = isDragging ? 0 : 1;
+        const {isDragging, connectDragSource, item} = this.props;
 
-
-        if (this.state.hidden)
-            return connectDragSource(<div style={{color: this.state.fontCol}}
-                        className={"card back"}>
-            </div>);
+        if (this.props.isHidden)
+            return <div style={{color: this.state.fontCol}}
+                                          className={"card back"}>
+            </div>;
         else
             return connectDragSource(<div style={{color: this.state.fontCol}}
-                        className={"card"}>
+                                          className={"card draggable"}>
                 <CardSide value={this.props.value} color={this.props.color}/>
                 <CardMiddle value={this.props.value} color={this.props.color}/>
                 <CardSide value={this.props.value} color={this.props.color}/>
