@@ -32,23 +32,25 @@ class App extends React.Component {
         return arr;
     };
 
-    createSolitaireColumns = () => {
+    constructor(props) {
+        super(props);
+        console.log('xd');
         let cardDeck = this.createCardDeck();
         cardDeck = this.shuffleArray(cardDeck);
         let cardsPlacedInColumns = cardDeck.slice(0, 7 * 4);
+        let restOfCards = cardDeck.slice(7 * 4, cardDeck.length);
         let colOfCards = [];
         for (let i = 0; i < 7; ++i) {
             let cardsInColumn = cardsPlacedInColumns.slice(i * 4, (i + 1) * 4);
             cardsInColumn[cardsInColumn.length - 1].hidden = false;
             colOfCards.push(cardsInColumn);
         }
-        return colOfCards;
-    };
-
-    state = {
-        columnsOfCards: this.createSolitaireColumns(),
-        targets: [{'id': -1}, {'id': -1}, {'id': -1}, {'id': -1}, {'id': -1}, {'id': -1}, {'id': -1}]
-    };
+        this.state = {
+            columnsOfCards: colOfCards,
+            restOfCardDeck: restOfCards,
+            targets: [{'id': -1}, {'id': -1}, {'id': -1}, {'id': -1}, {'id': -1}, {'id': -1}, {'id': -1}]
+        };
+    }
 
     moveCard = (source, dest) => {
         this.setState(prevState => {
@@ -82,10 +84,9 @@ class App extends React.Component {
         )
     };
 
-    showCard = (card) => {
+    showCardBehind = (card) => {
         let tempColOfCards = this.state.columnsOfCards;
         for (let val of tempColOfCards) {
-            console.log(val.indexOf(card));
             if (val.indexOf(card) > 0)
                 val[val.indexOf(card) - 1].hidden = false;
         }
@@ -119,7 +120,7 @@ class App extends React.Component {
                                 this.state.targets[colInd]['id'] !== -1 ?
                                     <div className={"card-box"}>
                                         <Target
-                                            showCard={(card) => this.showCard(card)}
+                                            showCardBehind={(card) => this.showCardBehind(card)}
                                             moveCard={(src, dst) => this.moveCard(src, dst)}
                                             id={colInd}/>
                                     </div> : <div/>
@@ -128,7 +129,29 @@ class App extends React.Component {
                     ))}
                 </div>
                 <div className="narrow-row">
-                    {/*<Target/>*/}
+                    <div className={"target-box"}>
+                    </div>
+                    <div className={"target-box"}>
+                    </div>
+                    <div className={"target-box"}>
+                    </div>
+                    <div className={"target-box"}>
+                    </div>
+                    <div className={"card-deck"}>
+                        {
+                            this.state.restOfCardDeck.map((card, index) => (
+                                <div key={card['id']} style={{zIndex: index+1}} className={"card-in-deck-box"}>
+                                    <Card deleteTargets={() => this.deleteTargets()}
+                                          createTargets={() => this.createTargets(card.id)}
+                                          id={card['id']}
+                                          item={card}
+                                          isHidden={this.isHiddenCard(card)}
+                                          value={card['value']}
+                                          color={card['color']}/>
+                                </div>
+                            ))
+                        }
+                    </div>
                 </div>
             </div>
         );

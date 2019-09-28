@@ -19,8 +19,9 @@ html, body {
     width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: left;
     height: 20%;
+    padding: 60px;
 }
 
 .wide-row {
@@ -43,4 +44,26 @@ html, body {
     flex-direction: row;
     justify-content: center;
     height: 20px;
+}
+
+.target-box {
+    width: 7vw;
+    height: 9.5vw;
+    border: solid black;
+    margin: 50px;
+}
+
+.card-deck {
+    justify-content: right;
+    width: 7vw;
+    height: 9.5vw;
+    border: solid black;
+    margin: 50px;
+}
+
+.card-in-deck-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    height: 0px;
 }

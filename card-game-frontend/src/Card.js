@@ -30,16 +30,16 @@ class Card extends React.Component {
         deleteTargets: PropTypes.func.isRequired
     };
 
-    findFontColor = (color) => {
+    findFontColor = () => {
         return this.props.color === 'spades' || this.props.color === 'clubs' ? 'black' : 'red';
     };
 
     state = {
-        fontCol: this.findFontColor(this.props.color),
+        fontCol: this.findFontColor(),
     };
 
     render = () => {
-        const {isDragging, connectDragSource, item} = this.props;
+        const {connectDragSource} = this.props;
 
         if (this.props.isHidden)
             return <div style={{color: this.state.fontCol}}
