@@ -51,6 +51,7 @@ html, body {
     height: 9.5vw;
     border: solid black;
     margin: 50px;
+    position:absolute;
 }
 
 .card-deck {

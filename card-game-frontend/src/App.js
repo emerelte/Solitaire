@@ -8,6 +8,10 @@ import Target from "./Target";
 
 class App extends React.Component {
 
+    findFontColor = (card) => {
+        return card.color === 'spades' || card.color === 'clubs' ? 'black' : 'red';
+    };
+
     createCardDeck = () => {
         let cardDeck = [];
         const listOfColors = ['spades', 'clubs', 'hearts', 'diams'];
@@ -34,7 +38,6 @@ class App extends React.Component {
 
     constructor(props) {
         super(props);
-        console.log('xd');
         let cardDeck = this.createCardDeck();
         cardDeck = this.shuffleArray(cardDeck);
         let cardsPlacedInColumns = cardDeck.slice(0, 7 * 4);
@@ -48,11 +51,13 @@ class App extends React.Component {
         this.state = {
             columnsOfCards: colOfCards,
             restOfCardDeck: restOfCards,
-            targets: [{'id': -1}, {'id': -1}, {'id': -1}, {'id': -1}, {'id': -1}, {'id': -1}, {'id': -1}]
+            bottomCards: [[], [], [], []],
+            columnTargets: [{'id': -1}, {'id': -1}, {'id': -1}, {'id': -1}, {'id': -1}, {'id': -1}, {'id': -1}],
+            bottomTargets: [{'id': -1}, {'id': -1}, {'id': -1}, {'id': -1}]
         };
     }
 
-    moveCard = (source, dest) => {
+    moveCardBetweenColumns = (source, dest) => {
         this.setState(prevState => {
             return {
                 columnsOfCards: prevState.columnsOfCards.map(k => k.filter(e => e.id !== source.id))
@@ -67,20 +72,52 @@ class App extends React.Component {
         this.deleteTargets();
     };
 
-    createTargets = (cardId) => {
-        let targets = this.state.columnsOfCards.map((item, index) => (
-            item.length > 0 && item[item.length - 1].id !== cardId ? {'id': item[item.length - 1].id} : {'id': -1}
-        ));
+    moveCardToBottomTarget = (source, dest) => {
         this.setState(prevState => {
             return {
-                targets: targets
+                columnsOfCards: prevState.columnsOfCards.map(k => k.filter(e => e.id !== source.id))
+            }
+        });
+        this.setState(prevState => {
+            prevState.bottomCards[dest].push(source);
+            console.log(prevState.bottomCards);
+            return {
+                bottomCards: prevState.bottomCards
+            }
+        });
+        this.deleteTargets();
+    };
+
+    isPossibleToMoveCardBetweenColumns = (movingCard, targetCard) => {
+        return this.findFontColor(movingCard) !== this.findFontColor(targetCard) &&
+            movingCard.value === targetCard.value - 1;
+    };
+
+    createTargets = (card) => {
+        let columnTargets = [];
+        let bottomTargets = [];
+        this.state.columnsOfCards.forEach((column, index) => {
+                if (this.isPossibleToMoveCardBetweenColumns(card, column[column.length - 1]))
+                    columnTargets.push({'id': column[column.length - 1].id});
+                else
+                    columnTargets.push({'id': -1});
+            }
+        );
+
+        this.setState(prevState => {
+            return {
+                columnTargets: columnTargets,
+                bottomTargets: [{'id': 0}, {'id': 0}, {'id': 0}, {'id': 0}]
             }
         })
     };
 
     deleteTargets = () => {
         this.setState(
-            {'targets': [{'id': -1}, {'id': -1}, {'id': -1}, {'id': -1}, {'id': -1}, {'id': -1}, {'id': -1}]}
+            {
+                'columnTargets': [{'id': -1}, {'id': -1}, {'id': -1}, {'id': -1}, {'id': -1}, {'id': -1}, {'id': -1}],
+                'bottomTargets': [{'id': -1}, {'id': -1}, {'id': -1}, {'id': -1}]
+            }
         )
     };
 
@@ -108,7 +145,7 @@ class App extends React.Component {
                             {column.map((card, index) => (
                                 <div key={card['id']} className={"card-box"}>
                                     <Card deleteTargets={() => this.deleteTargets()}
-                                          createTargets={() => this.createTargets(card.id)}
+                                          createTargets={() => this.createTargets(card)}
                                           id={card['id']}
                                           item={card}
                                           isHidden={this.isHiddenCard(card)}
@@ -117,11 +154,11 @@ class App extends React.Component {
                                 </div>
                             ))}
                             {
-                                this.state.targets[colInd]['id'] !== -1 ?
+                                this.state.columnTargets[colInd]['id'] !== -1 ?
                                     <div className={"card-box"}>
                                         <Target
                                             showCardBehind={(card) => this.showCardBehind(card)}
-                                            moveCard={(src, dst) => this.moveCard(src, dst)}
+                                            moveCard={(src, dst) => this.moveCardBetweenColumns(src, dst)}
                                             id={colInd}/>
                                     </div> : <div/>
                             }
@@ -129,20 +166,40 @@ class App extends React.Component {
                     ))}
                 </div>
                 <div className="narrow-row">
-                    <div className={"target-box"}>
-                    </div>
-                    <div className={"target-box"}>
-                    </div>
-                    <div className={"target-box"}>
-                    </div>
-                    <div className={"target-box"}>
-                    </div>
+                    {
+                        this.state.bottomCards.map((cardList, index) => (
+                            <div key={index} className={"solitaire-column"}>
+                                {
+                                    cardList.map((card, index) => (
+                                        <div key={card['id']} className={"target-box"}>
+                                            <Card deleteTargets={() => this.deleteTargets()}
+                                                  createTargets={() => this.createTargets(card)}
+                                                  id={card['id']}
+                                                  item={card}
+                                                  isHidden={this.isHiddenCard(card)}
+                                                  value={card['value']}
+                                                  color={card['color']}/>
+                                        </div>
+                                    ))
+                                }
+                                {
+                                    <div style={{zIndex: 1}} key={index} className={"target-box"}>
+                                        <Target
+                                            showCardBehind={(card) => this.showCardBehind(card)}
+                                            moveCard={(src, dst) => this.moveCardToBottomTarget(src, dst)}
+                                            id={index}/>
+
+                                    </div>
+                                }
+                            </div>))
+
+                    }
                     <div className={"card-deck"}>
                         {
                             this.state.restOfCardDeck.map((card, index) => (
-                                <div key={card['id']} style={{zIndex: index+1}} className={"card-in-deck-box"}>
+                                <div key={card['id']} style={{zIndex: index + 1}} className={"card-in-deck-box"}>
                                     <Card deleteTargets={() => this.deleteTargets()}
-                                          createTargets={() => this.createTargets(card.id)}
+                                          createTargets={() => this.createTargets(card)}
                                           id={card['id']}
                                           item={card}
                                           isHidden={this.isHiddenCard(card)}
