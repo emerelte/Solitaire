@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 
 const itemSource = {
     beginDrag(props) {
+        console.log(props.item);
         props.createTargets();
         return props.item;
     },

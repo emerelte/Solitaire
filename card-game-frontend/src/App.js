@@ -57,35 +57,71 @@ class App extends React.Component {
         };
     }
 
-    moveCardBetweenColumns = (source, dest) => {
-        this.setState(prevState => {
-            return {
-                columnsOfCards: prevState.columnsOfCards.map(k => k.filter(e => e.id !== source.id))
-            }
-        });
-        this.setState(prevState => {
-            prevState.columnsOfCards[dest].push(source);
-            return {
-                columnsOfCards: prevState.columnsOfCards
-            }
-        });
+    moveCardsToDestColumn = (startingCard, destCol) => {
+        let cardsToMove = this.getListOfBoundCards(startingCard);
+        for (let i = 0; i < cardsToMove.length; ++i) {
+            this.moveCardToColumn(cardsToMove[i], destCol);
+        }
         this.deleteTargets();
     };
 
-    moveCardToBottomTarget = (source, dest) => {
+    getListOfBoundCards(card) {
+        let sourceCardCoords = this.getCardCoords(card);
+        let column = sourceCardCoords.column;
+        let row = sourceCardCoords.row;
+        let boundCards = [];
+        while (row < this.state.columnsOfCards[column].length) {
+            boundCards.push(this.getCardAt(column, row));
+            row++;
+        }
+        return boundCards;
+    }
+
+    moveCardsToBottomColumn = (startingCard, destCol) => {
+        let cardsToMove = this.getListOfBoundCards(startingCard);
+        for (let i = 0; i < cardsToMove.length; ++i) {
+            this.moveCardToBottomColumn(cardsToMove[i], destCol);
+        }
+    };
+
+    moveCardToBottomColumn(cardToMove, destCol) {
         this.setState(prevState => {
             return {
-                columnsOfCards: prevState.columnsOfCards.map(k => k.filter(e => e.id !== source.id))
+                columnsOfCards: prevState.columnsOfCards.map(k => k.filter(e => e.id !== cardToMove.id))
             }
         });
         this.setState(prevState => {
-            prevState.bottomCards[dest].push(source);
-            console.log(prevState.bottomCards);
+            prevState.bottomCards[destCol].push(cardToMove);
             return {
                 bottomCards: prevState.bottomCards
             }
         });
-        this.deleteTargets();
+    }
+
+    moveCardToColumn = (card, dest) => {
+        this.setState(prevState => {
+            return {
+                columnsOfCards: prevState.columnsOfCards.map(k => k.filter(e => e.id !== card.id))
+            }
+        });
+        this.setState(prevState => {
+            prevState.columnsOfCards[dest].push(card);
+            return {
+                columnsOfCards: prevState.columnsOfCards
+            }
+        });
+    };
+
+    getCardCoords = (card) => {
+        for (let i = 0; i < this.state.columnsOfCards.length; ++i) {
+            if (this.state.columnsOfCards[i].indexOf(card) !== -1)
+                return {"column": i, "row": this.state.columnsOfCards[i].indexOf(card)};
+        }
+        return {"column": -1, "row": -1};
+    };
+
+    getCardAt = (colIdx, rowIdx) => {
+        return this.state.columnsOfCards[colIdx][rowIdx];
     };
 
     isPossibleToMoveCardBetweenColumns = (movingCard, targetCard) => {
@@ -95,9 +131,10 @@ class App extends React.Component {
 
     createTargets = (card) => {
         let columnTargets = [];
-        let bottomTargets = [];
         this.state.columnsOfCards.forEach((column, index) => {
-                if (this.isPossibleToMoveCardBetweenColumns(card, column[column.length - 1]))
+                if (column.length === 0)
+                    columnTargets.push({'id': 0});
+                else if (this.isPossibleToMoveCardBetweenColumns(card, column[column.length - 1]))
                     columnTargets.push({'id': column[column.length - 1].id});
                 else
                     columnTargets.push({'id': -1});
@@ -158,7 +195,7 @@ class App extends React.Component {
                                     <div className={"card-box"}>
                                         <Target
                                             showCardBehind={(card) => this.showCardBehind(card)}
-                                            moveCard={(src, dst) => this.moveCardBetweenColumns(src, dst)}
+                                            moveCard={(src, dst) => this.moveCardsToDestColumn(src, dst)}
                                             id={colInd}/>
                                     </div> : <div/>
                             }
@@ -186,7 +223,7 @@ class App extends React.Component {
                                     <div style={{zIndex: 1}} key={index} className={"target-box"}>
                                         <Target
                                             showCardBehind={(card) => this.showCardBehind(card)}
-                                            moveCard={(src, dst) => this.moveCardToBottomTarget(src, dst)}
+                                            moveCard={(src, dst) => this.moveCardsToBottomColumn(src, dst)}
                                             id={index}/>
 
                                     </div>
