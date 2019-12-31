@@ -1,5 +1,6 @@
 import React from 'react';
 import './style/App.css';
+import './style/CardDeck.css';
 import CardStack from "./CardStack";
 import HTML5Backend from 'react-dnd-html5-backend'
 import {DragDropContext} from 'react-dnd'
@@ -150,6 +151,22 @@ class App extends React.Component {
         );
     };
 
+    dealNextCards = () => {
+        console.log("dealing");
+        this.setState(prevState => {
+            for (let i = 0; i < prevState.columnsOfCards.length; ++i) {
+                let nextCardFromDeck = prevState.restOfCardDeck.pop();
+                if (nextCardFromDeck === undefined)
+                    break;
+                nextCardFromDeck.hidden = false;
+                prevState.columnsOfCards[i].push(nextCardFromDeck);
+            }
+            return {
+                columnsOfCards: prevState.columnsOfCards
+            }
+        });
+    };
+
     render = () => {
         console.log(this.state.columnsOfCards);
         return (
@@ -164,7 +181,7 @@ class App extends React.Component {
                                 cardsInColumn={column}/>
                             {
                                 this.state.columnTargets[colInd]['id'] !== emptyTarget ?
-                                    <div className={"card-box"} style={{position: "absolute", top: column.length*15}}>
+                                    <div className={"card-box"} style={{position: "absolute", top: column.length * 15}}>
                                         <Target
                                             showCardBehind={(card) => this.showCardBehind(card)}
                                             moveCard={(src, dst) => this.moveCardsToDestColumn(src, dst)}
@@ -188,12 +205,12 @@ class App extends React.Component {
                                             showCardBehind={(card) => this.showCardBehind(card)}
                                             moveCard={(src, dst) => this.moveCardsToBottomColumn(src, dst)}
                                             id={index}/>
-
                                     </div>
                                 }
                             </div>))
                     }
-                    {/*<CardDeck cards={this.state.restOfCardDeck}/>*/}
+                    <div onClick={this.dealNextCards}>
+                        <CardDeck cards={this.state.restOfCardDeck} className={"card-deck"}/></div>
                 </div>
             </div>
         );

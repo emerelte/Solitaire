@@ -20,7 +20,7 @@ export default class CardDeck extends React.Component {
             <div className={"card-deck"}>
                 {
                     this.props.cards.map((card, index) => (
-                        <div onClick={this.showNextCard} key={card['id']} style={{zIndex: index + 1}}
+                        <div key={card['id']} style={{zIndex: index + 1}}
                              className={"card-in-deck-box"}>
                             <Card card={card}/>
                         </div>
@@ -28,14 +28,5 @@ export default class CardDeck extends React.Component {
                 }
             </div>
         )
-    };
-
-    showNextCard = () => {
-        this.setState(prevState => {
-            return {
-                cards: prevState.cards,
-            }
-        });
-        console.log(this.state.cards);
     };
 }
