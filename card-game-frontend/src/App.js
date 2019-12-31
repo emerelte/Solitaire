@@ -179,10 +179,8 @@ class App extends React.Component {
                         this.state.bottomCards.map((cardList, index) => (
                             <div key={index} className={"solitaire-column"}>
                                 {
-                                    <CardStack
-                                        deleteTargets={() => this.deleteTargets}
-                                        createTargets={() => this.createTargets}
-                                        cardsInColumn={cardList}/>
+                                    <CardDeck
+                                        cards={cardList}/>
                                 }
                                 {
                                     <div style={{zIndex: 1}} key={index} className={"target-box"}>
@@ -195,7 +193,7 @@ class App extends React.Component {
                                 }
                             </div>))
                     }
-                    {/*<CardDeck hiddenCards={this.state.restOfCardDeck}/>*/}
+                    {/*<CardDeck cards={this.state.restOfCardDeck}/>*/}
                 </div>
             </div>
         );

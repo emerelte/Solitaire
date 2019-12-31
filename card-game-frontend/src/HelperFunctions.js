@@ -29,4 +29,3 @@ export const shuffleArray = (arr) => {
 export const isHiddenCard = (card) => {
     return card.hidden;
 };
-

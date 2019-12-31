@@ -29,10 +29,6 @@ class CardStack extends React.Component {
         deleteTargets: PropTypes.func.isRequired
     };
 
-    findFontColor = () => {
-        return this.props.cardsInColumn[0]['color'] === 'spades' || this.props.cardsInColumn[0]['color'] === 'clubs' ? 'black' : 'red';
-    };
-
     constructor(props) {
         super(props);
         this.state = {
@@ -58,10 +54,9 @@ class CardStack extends React.Component {
         }
 
         let bottomCard = this.state.column[0];
-        let fontCol = this.findFontColor();
         if (bottomCard.hidden)
             return <div style={{position: "absolute", top: "15%"}}>
-                <Card fontCol={fontCol} isHidden={bottomCard.hidden} value={bottomCard.value} color={bottomCard.color}/>
+                <Card card={bottomCard}/>
                 <DragItemContainer deleteTargets={() => this.props.deleteTargets()}
                                    createTargets={this.props.createTargets}
                                    cardsInColumn={this.state.column.slice(1, this.state.column.length)}/>
@@ -69,7 +64,7 @@ class CardStack extends React.Component {
         else {
             return connectDragSource(
                 <div style={{position: "absolute", top: "15%"}}>
-                    <Card fontCol={fontCol} isHidden={bottomCard.hidden} value={bottomCard.value} color={bottomCard.color}/>
+                    <Card card={bottomCard}/>
                     <DragItemContainer deleteTargets={() => this.props.deleteTargets()}
                                        createTargets={this.props.createTargets}
                                        cardsInColumn={this.state.column.slice(1, this.state.column.length)}/>

@@ -1,23 +1,17 @@
 import React from 'react';
 import './style/CardSide.css';
-import CardColor from "./CardColor";
-import CardValue from "./CardValue";
-import Card from "./CardStack";
-import {isHiddenCard} from "./HelperFunctions";
-
+import Card from "./Card.js";
 
 export default class CardDeck extends React.Component {
 
     state = {
-        hiddenCards: [],
-        shownCards: [],
+        cards: [],
     };
 
     constructor(props) {
         super(props);
         this.state = {
-            hiddenCards: this.props.hiddenCards,
-            shownCards: []
+            cards: this.props.cards,
         }
     }
 
@@ -25,16 +19,10 @@ export default class CardDeck extends React.Component {
         return (
             <div className={"card-deck"}>
                 {
-                    this.props.hiddenCards.map((card, index) => (
+                    this.props.cards.map((card, index) => (
                         <div onClick={this.showNextCard} key={card['id']} style={{zIndex: index + 1}}
                              className={"card-in-deck-box"}>
-                            <Card deleteTargets={() => this.deleteTargets()}
-                                  createTargets={() => this.createTargets(card)}
-                                  id={card['id']}
-                                  item={card}
-                                  isHidden={isHiddenCard(card)}
-                                  value={card['value']}
-                                  color={card['color']}/>
+                            <Card card={card}/>
                         </div>
                     ))
                 }
@@ -45,11 +33,9 @@ export default class CardDeck extends React.Component {
     showNextCard = () => {
         this.setState(prevState => {
             return {
-                hiddenCards: prevState.hiddenCards,
-                shownCards: prevState.shownCards.append(prevState.hiddenCards.first)
+                cards: prevState.cards,
             }
         });
-        console.log(this.state.hiddenCards);
-        console.log(this.state.shownCards);
+        console.log(this.state.cards);
     };
 }
