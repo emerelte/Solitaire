@@ -29,3 +29,23 @@ export const shuffleArray = (arr) => {
 export const isHiddenCard = (card) => {
     return card.hidden;
 };
+
+export const showCard = (card) => {
+    card.hidden = false;
+};
+
+export const isKing = (card) => {
+    return card.value === 13
+};
+
+export const areCardsInRightOrder = (cards) => {
+    if (cards.length < 2)
+        return true;
+    for (let i = 1; i< cards.length; ++i)
+    {
+        if (findFontColor(cards[i]) === findFontColor(cards[i - 1]) || cards[i].value !== cards[i - 1].value - 1)  {
+            return false;
+        }
+    }
+    return true;
+};

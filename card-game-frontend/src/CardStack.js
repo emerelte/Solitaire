@@ -3,6 +3,7 @@ import './style/Card.css';
 import Card from './Card.js'
 import {DragSource} from "react-dnd";
 import PropTypes from 'prop-types';
+import {areCardsInRightOrder, showCard} from './HelperFunctions'
 
 const itemSource = {
     beginDrag(props) {
@@ -54,6 +55,9 @@ class CardStack extends React.Component {
         }
 
         let bottomCard = this.state.column[0];
+        if (this.isLastCardInStack())
+            showCard(bottomCard);
+        //TODO dragging active only if cards in right order
         if (bottomCard.hidden)
             return <div style={{position: "absolute", top: "15%"}}>
                 <Card card={bottomCard}/>
@@ -62,15 +66,29 @@ class CardStack extends React.Component {
                                    cardsInColumn={this.state.column.slice(1, this.state.column.length)}/>
             </div>;
         else {
-            return connectDragSource(
-                <div style={{position: "absolute", top: "15%"}}>
+            if (areCardsInRightOrder(this.state.column))
+                return connectDragSource(
+                    <div className={"draggable"} style={{position: "absolute", top: "15%"}}>
+                        <Card card={bottomCard}/>
+                        <DragItemContainer deleteTargets={() => this.props.deleteTargets()}
+                                           createTargets={this.props.createTargets}
+                                           cardsInColumn={this.state.column.slice(1, this.state.column.length)}/>
+                    </div>);
+            else {
+                console.log(this.state.column);
+                return <div style={{position: "absolute", top: "15%"}}>
                     <Card card={bottomCard}/>
                     <DragItemContainer deleteTargets={() => this.props.deleteTargets()}
                                        createTargets={this.props.createTargets}
                                        cardsInColumn={this.state.column.slice(1, this.state.column.length)}/>
-                </div>);
+                </div>
+            }
         }
     };
+
+    isLastCardInStack() {
+        return this.state.column.length === 1;
+    }
 }
 
 export default DragSource('item', itemSource, collect)(CardStack)

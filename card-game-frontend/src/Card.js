@@ -25,7 +25,7 @@ export default class Card extends React.Component {
             </div>;
         else
             return <div style={{color: findFontColor(this.state.card)}}
-                        className={"card draggable"}>
+                        className={"card"}>
                 <CardSide value={this.state.card.value} color={this.state.card.color}/>
                 <CardMiddle value={this.state.card.value} color={this.state.card.color}/>
                 <CardSide value={this.state.card.value} color={this.state.card.color}/>

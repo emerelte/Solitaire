@@ -6,7 +6,6 @@ import PropTypes from "prop-types";
 
 const cardTarget = {
     drop(props, monitor, component) {
-        props.showCardBehind(monitor.getItem());
         props.moveCard(monitor.getItem(), props.id);
     }
 };
@@ -22,7 +21,6 @@ const collect = (connect, monitor) => {
 class Target extends Component {
     static propTypes = {
         moveCard: PropTypes.func.isRequired,
-        showCardBehind: PropTypes.func.isRequired
     };
 
     render() {

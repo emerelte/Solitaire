@@ -6,10 +6,10 @@ import HTML5Backend from 'react-dnd-html5-backend'
 import {DragDropContext} from 'react-dnd'
 import Target from "./Target";
 import CardDeck from "./CardDeck";
-import {findFontColor, createCardDeck, shuffleArray} from "./HelperFunctions"
+import {findFontColor, createCardDeck, shuffleArray, isKing} from "./HelperFunctions"
 
 const emptyTarget = -1;
-const nrOfCols = 7;
+const nrOfCols = 8;
 const nrOfCardsInColumn = 4;
 const idOfEmptyColumnTarget = 0;
 
@@ -31,7 +31,7 @@ class App extends React.Component {
             columnsOfCards: colOfCards,
             restOfCardDeck: restOfCards,
             bottomCards: [[], [], [], []],
-            columnTargets: [{'id': emptyTarget}, {'id': emptyTarget}, {'id': emptyTarget}, {'id': emptyTarget}, {'id': emptyTarget}, {'id': emptyTarget}, {'id': emptyTarget}],
+            columnTargets: Array(nrOfCols).fill({'id': emptyTarget}),
             bottomTargets: [{'id': emptyTarget}, {'id': emptyTarget}, {'id': emptyTarget}, {'id': emptyTarget}]
         };
     }
@@ -56,14 +56,9 @@ class App extends React.Component {
         return boundCards;
     }
 
-    moveCardsToBottomColumn = (startingCard, destCol) => {
-        let cardsToMove = this.getListOfBoundCards(startingCard);
-        for (let i = 0; i < cardsToMove.length; ++i) {
-            this.moveCardToBottomColumn(cardsToMove[i], destCol);
-        }
-    };
-
     moveCardToBottomColumn(cardToMove, destCol) {
+        if (!this.isNextCardInOrder(cardToMove, destCol))
+            return;
         this.setState(prevState => {
             return {
                 columnsOfCards: prevState.columnsOfCards.map(k => k.filter(e => e.id !== cardToMove.id))
@@ -75,6 +70,20 @@ class App extends React.Component {
                 bottomCards: prevState.bottomCards
             }
         });
+    }
+
+    isNextCardInOrder(cardToMove, destCol) {
+        if (this.state.bottomCards[destCol].length === 0) {
+            if (cardToMove.value === 1)
+                return true;
+        } else {
+            console.log(this.state.bottomCards[destCol][this.state.bottomCards[destCol].length - 1].color);
+            console.log(this.state.bottomCards[destCol][this.state.bottomCards[destCol].length - 1].value - 1);
+            if (cardToMove.color === this.state.bottomCards[destCol][this.state.bottomCards[destCol].length - 1].color
+                && cardToMove.value === this.state.bottomCards[destCol][this.state.bottomCards[destCol].length - 1].value + 1)
+                return true;
+        }
+        return false;
     }
 
     moveCardToColumn = (card, dest) => {
@@ -110,11 +119,14 @@ class App extends React.Component {
     };
 
     createTargets = (card) => {
-        console.log(card);
         let columnTargets = [];
         this.state.columnsOfCards.forEach((column, index) => {
-                if (column.length === 0)
-                    columnTargets.push({'id': idOfEmptyColumnTarget});
+                if (column.length === 0) {
+                    if (isKing(card))
+                        columnTargets.push({'id': idOfEmptyColumnTarget});
+                    else
+                        columnTargets.push({'id': emptyTarget});
+                }
                 else if (this.isPossibleToMoveCardBetweenColumns(card, column[column.length - 1]))
                     columnTargets.push({'id': column[column.length - 1].id});
                 else
@@ -125,34 +137,21 @@ class App extends React.Component {
         this.setState(prevState => {
             return {
                 columnTargets: columnTargets,
-                bottomTargets: [{'id': 0}, {'id': 0}, {'id': 0}, {'id': 0}]
+                bottomTargets: [{'id': emptyTarget}, {'id': emptyTarget}, {'id': emptyTarget}, {'id': emptyTarget}]
             }
         })
     };
 
     deleteTargets = () => {
-        console.log('delete');
         this.setState(
             {
-                'columnTargets': [{'id': emptyTarget}, {'id': emptyTarget}, {'id': emptyTarget}, {'id': emptyTarget}, {'id': emptyTarget}, {'id': emptyTarget}, {'id': emptyTarget}],
+                'columnTargets': Array(nrOfCols).fill({'id': emptyTarget}),
                 'bottomTargets': [{'id': emptyTarget}, {'id': emptyTarget}, {'id': emptyTarget}, {'id': emptyTarget}]
             }
         )
     };
 
-    showCardBehind = (card) => {
-        let tempColOfCards = this.state.columnsOfCards;
-        for (let val of tempColOfCards) {
-            if (val.indexOf(card) > 0)
-                val[val.indexOf(card) - 1].hidden = false;
-        }
-        this.setState(
-            {'columnsOfCards': tempColOfCards}
-        );
-    };
-
     dealNextCards = () => {
-        console.log("dealing");
         this.setState(prevState => {
             for (let i = 0; i < prevState.columnsOfCards.length; ++i) {
                 let nextCardFromDeck = prevState.restOfCardDeck.pop();
@@ -168,7 +167,7 @@ class App extends React.Component {
     };
 
     render = () => {
-        console.log(this.state.columnsOfCards);
+        console.log(this.state.columnTargets);
         return (
             <div className="card-game-table">
                 <div className="wide-row">
@@ -183,7 +182,6 @@ class App extends React.Component {
                                 this.state.columnTargets[colInd]['id'] !== emptyTarget ?
                                     <div className={"card-box"} style={{position: "absolute", top: column.length * 15}}>
                                         <Target
-                                            showCardBehind={(card) => this.showCardBehind(card)}
                                             moveCard={(src, dst) => this.moveCardsToDestColumn(src, dst)}
                                             id={colInd}/></div>
                                     : <div/>
@@ -202,8 +200,7 @@ class App extends React.Component {
                                 {
                                     <div style={{zIndex: 1}} key={index} className={"target-box"}>
                                         <Target
-                                            showCardBehind={(card) => this.showCardBehind(card)}
-                                            moveCard={(src, dst) => this.moveCardsToBottomColumn(src, dst)}
+                                            moveCard={(src, dst) => this.moveCardToBottomColumn(src, dst)}
                                             id={index}/>
                                     </div>
                                 }
