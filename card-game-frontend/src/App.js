@@ -1,14 +1,16 @@
 import React from 'react';
 import './style/App.css';
-import Card from "./Card";
+import CardStack from "./CardStack";
 import HTML5Backend from 'react-dnd-html5-backend'
 import {DragDropContext} from 'react-dnd'
 import Target from "./Target";
+import CardDeck from "./CardDeck";
 import {findFontColor, createCardDeck, shuffleArray, isHiddenCard} from "./HelperFunctions"
 
 const emptyTarget = -1;
 const nrOfCols = 7;
 const nrOfCardsInColumn = 4;
+const idOfEmptyColumnTarget = 0;
 
 class App extends React.Component {
 
@@ -75,6 +77,7 @@ class App extends React.Component {
     }
 
     moveCardToColumn = (card, dest) => {
+        console.log(card, dest);
         this.setState(prevState => {
             return {
                 columnsOfCards: prevState.columnsOfCards.map(k => k.filter(e => e.id !== card.id))
@@ -106,10 +109,11 @@ class App extends React.Component {
     };
 
     createTargets = (card) => {
+        console.log(card);
         let columnTargets = [];
         this.state.columnsOfCards.forEach((column, index) => {
                 if (column.length === 0)
-                    columnTargets.push({'id': 0});
+                    columnTargets.push({'id': idOfEmptyColumnTarget});
                 else if (this.isPossibleToMoveCardBetweenColumns(card, column[column.length - 1]))
                     columnTargets.push({'id': column[column.length - 1].id});
                 else
@@ -126,6 +130,7 @@ class App extends React.Component {
     };
 
     deleteTargets = () => {
+        console.log('delete');
         this.setState(
             {
                 'columnTargets': [{'id': emptyTarget}, {'id': emptyTarget}, {'id': emptyTarget}, {'id': emptyTarget}, {'id': emptyTarget}, {'id': emptyTarget}, {'id': emptyTarget}],
@@ -146,51 +151,37 @@ class App extends React.Component {
     };
 
     render = () => {
+        console.log(this.state.columnsOfCards);
         return (
             <div className="card-game-table">
                 <div className="wide-row">
                     {this.state.columnsOfCards.map((column, colInd) => (
                         <div key={colInd} className={"solitaire-column"}>
-                            {column.map((card, index) => (
-                                <div key={card['id']} className={"card-box"}>
-                                    <Card deleteTargets={() => this.deleteTargets()}
-                                          createTargets={() => this.createTargets(card)}
-                                          id={card['id']}
-                                          item={card}
-                                          isHidden={isHiddenCard(card)}
-                                          value={card['value']}
-                                          color={card['color']}>
-                                    </Card>
-                                </div>
-                            ))}
+                            <CardStack
+                                deleteTargets={() => this.deleteTargets()}
+                                createTargets={this.createTargets}
+                                cardsInColumn={column}/>
                             {
                                 this.state.columnTargets[colInd]['id'] !== emptyTarget ?
-                                    <div className={"card-box"}>
+                                    // <div className={"card-box"}>
                                         <Target
                                             showCardBehind={(card) => this.showCardBehind(card)}
                                             moveCard={(src, dst) => this.moveCardsToDestColumn(src, dst)}
                                             id={colInd}/>
-                                    </div> : <div/>
+                                     : <div/>
                             }
                         </div>
                     ))}
                 </div>
-                < div className="narrow-row">
+                <div className="narrow-row">
                     {
                         this.state.bottomCards.map((cardList, index) => (
                             <div key={index} className={"solitaire-column"}>
                                 {
-                                    cardList.map((card, index) => (
-                                        <div key={card['id']} className={"target-box"}>
-                                            <Card deleteTargets={() => this.deleteTargets()}
-                                                  createTargets={() => this.createTargets(card)}
-                                                  id={card['id']}
-                                                  item={card}
-                                                  isHidden={isHiddenCard(card)}
-                                                  value={card['value']}
-                                                  color={card['color']}/>
-                                        </div>
-                                    ))
+                                    <CardStack
+                                        deleteTargets={() => this.deleteTargets}
+                                        createTargets={() => this.createTargets}
+                                        cardsInColumn={cardList}/>
                                 }
                                 {
                                     <div style={{zIndex: 1}} key={index} className={"target-box"}>
@@ -202,23 +193,8 @@ class App extends React.Component {
                                     </div>
                                 }
                             </div>))
-
                     }
-                    <div className={"card-deck"}>
-                        {
-                            this.state.restOfCardDeck.map((card, index) => (
-                                <div key={card['id']} style={{zIndex: index + 1}} className={"card-in-deck-box"}>
-                                    <Card deleteTargets={() => this.deleteTargets()}
-                                          createTargets={() => this.createTargets(card)}
-                                          id={card['id']}
-                                          item={card}
-                                          isHidden={isHiddenCard(card)}
-                                          value={card['value']}
-                                          color={card['color']}/>
-                                </div>
-                            ))
-                        }
-                    </div>
+                    {/*<CardDeck hiddenCards={this.state.restOfCardDeck}/>*/}
                 </div>
             </div>
         );

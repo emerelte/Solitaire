@@ -30,7 +30,7 @@
 }
 
 .card.back {
-    text-indent: -4000px;
+    /*text-indent: -4000px;*/
     background-color: #ccc;
     background-repeat: repeat;
     background-image: -moz-repeating-linear-gradient(34% 6% 135deg,#0F1E59, #75A1BF, #3E3E63 50%);
