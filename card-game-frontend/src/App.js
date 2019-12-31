@@ -5,7 +5,7 @@ import HTML5Backend from 'react-dnd-html5-backend'
 import {DragDropContext} from 'react-dnd'
 import Target from "./Target";
 import CardDeck from "./CardDeck";
-import {findFontColor, createCardDeck, shuffleArray, isHiddenCard} from "./HelperFunctions"
+import {findFontColor, createCardDeck, shuffleArray} from "./HelperFunctions"
 
 const emptyTarget = -1;
 const nrOfCols = 7;
@@ -156,19 +156,20 @@ class App extends React.Component {
             <div className="card-game-table">
                 <div className="wide-row">
                     {this.state.columnsOfCards.map((column, colInd) => (
-                        <div key={colInd} className={"solitaire-column"}>
+                        <div key={colInd} style={{position: "relative", height: "0px"}}
+                             className={"solitaire-column"}>
                             <CardStack
                                 deleteTargets={() => this.deleteTargets()}
                                 createTargets={this.createTargets}
                                 cardsInColumn={column}/>
                             {
                                 this.state.columnTargets[colInd]['id'] !== emptyTarget ?
-                                    // <div className={"card-box"}>
+                                    <div className={"card-box"} style={{position: "absolute", top: column.length*15}}>
                                         <Target
                                             showCardBehind={(card) => this.showCardBehind(card)}
                                             moveCard={(src, dst) => this.moveCardsToDestColumn(src, dst)}
-                                            id={colInd}/>
-                                     : <div/>
+                                            id={colInd}/></div>
+                                    : <div/>
                             }
                         </div>
                     ))}

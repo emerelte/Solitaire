@@ -34,7 +34,7 @@ html, body {
 
 .solitaire-column {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     width: 15%;
     height: 100%;
 }

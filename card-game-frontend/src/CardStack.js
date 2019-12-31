@@ -1,8 +1,6 @@
 import React from 'react';
 import './style/Card.css';
 import Card from './Card.js'
-import CardMiddle from './CardMiddle.js'
-import CardSide from "./CardSide";
 import {DragSource} from "react-dnd";
 import PropTypes from 'prop-types';
 
@@ -75,8 +73,7 @@ class CardStack extends React.Component {
                     <DragItemContainer deleteTargets={() => this.props.deleteTargets()}
                                        createTargets={this.props.createTargets}
                                        cardsInColumn={this.state.column.slice(1, this.state.column.length)}/>
-                </div>)
-                ;
+                </div>);
         }
     };
 }

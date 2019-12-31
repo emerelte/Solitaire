@@ -3,5 +3,7 @@
     height: 9.2vw;
     border-style: solid;
     border-width: thin;
+    padding: .25em;
+
     z-index: 1;
 }
