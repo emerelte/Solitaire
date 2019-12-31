@@ -7,6 +7,7 @@ import {DragDropContext} from 'react-dnd'
 import Target from "./Target";
 import CardDeck from "./CardDeck";
 import {findFontColor, createCardDeck, shuffleArray, isKing} from "./HelperFunctions"
+import {string} from "prop-types";
 
 const emptyTarget = -1;
 const nrOfCols = 8;
@@ -77,8 +78,6 @@ class App extends React.Component {
             if (cardToMove.value === 1)
                 return true;
         } else {
-            console.log(this.state.bottomCards[destCol][this.state.bottomCards[destCol].length - 1].color);
-            console.log(this.state.bottomCards[destCol][this.state.bottomCards[destCol].length - 1].value - 1);
             if (cardToMove.color === this.state.bottomCards[destCol][this.state.bottomCards[destCol].length - 1].color
                 && cardToMove.value === this.state.bottomCards[destCol][this.state.bottomCards[destCol].length - 1].value + 1)
                 return true;
@@ -126,8 +125,7 @@ class App extends React.Component {
                         columnTargets.push({'id': idOfEmptyColumnTarget});
                     else
                         columnTargets.push({'id': emptyTarget});
-                }
-                else if (this.isPossibleToMoveCardBetweenColumns(card, column[column.length - 1]))
+                } else if (this.isPossibleToMoveCardBetweenColumns(card, column[column.length - 1]))
                     columnTargets.push({'id': column[column.length - 1].id});
                 else
                     columnTargets.push({'id': emptyTarget});
@@ -180,7 +178,11 @@ class App extends React.Component {
                                 cardsInColumn={column}/>
                             {
                                 this.state.columnTargets[colInd]['id'] !== emptyTarget ?
-                                    <div className={"card-box"} style={{position: "absolute", top: column.length * 15}}>
+                                    <div className={"card-box"}
+                                         style={{
+                                             position: "relative",
+                                             top: "" + ((column.length - 1) * 9.8 * 15 / 100) + "vw"
+                                         }}>
                                         <Target
                                             moveCard={(src, dst) => this.moveCardsToDestColumn(src, dst)}
                                             id={colInd}/></div>
@@ -189,21 +191,17 @@ class App extends React.Component {
                         </div>
                     ))}
                 </div>
-                <div className="narrow-row">
+                <div className="narrow-row" style={{position: "relative", bottom: "20px"}}>
                     {
                         this.state.bottomCards.map((cardList, index) => (
-                            <div key={index} className={"solitaire-column"}>
-                                {
-                                    <CardDeck
-                                        cards={cardList}/>
-                                }
-                                {
-                                    <div style={{zIndex: 1}} key={index} className={"target-box"}>
-                                        <Target
-                                            moveCard={(src, dst) => this.moveCardToBottomColumn(src, dst)}
-                                            id={index}/>
-                                    </div>
-                                }
+                            <div key={index} className={"card-box"}>
+                                <CardDeck
+                                    cards={cardList}/>
+                                <div style={{zIndex: 1}} key={index} className={"target-box"}>
+                                    <Target
+                                        moveCard={(src, dst) => this.moveCardToBottomColumn(src, dst)}
+                                        id={index}/>
+                                </div>
                             </div>))
                     }
                     <div onClick={this.dealNextCards}>

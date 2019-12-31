@@ -29,7 +29,6 @@ class Target extends Component {
 
         return connectDropTarget(
             <div className="target" style={{borderColor: borderColor}}>
-                Target
             </div>
         );
     }
