@@ -2,33 +2,32 @@ import React from 'react';
 import './style/App.css';
 import './style/CardDeck.css';
 import CardStack from "./CardStack";
+import GameStatusForm from "./GameStatusForm"
 import HTML5Backend from 'react-dnd-html5-backend'
 import {DragDropContext} from 'react-dnd'
 import Target from "./Target";
 import CardDeck from "./CardDeck";
-import {findFontColor, createCardDeck, shuffleArray, isKing} from "./HelperFunctions"
-
-const halfDeckGameSetup = {
-    "nrOfSuites": 2,
-    "nrOfCols": 7,
-    "nrOfCardsInColumn": 2
-};
-
-const fullDeckGameSetup = {
-    "nrOfSuites": 4,
-    "nrOfCols": 8,
-    "nrOfCardsInColumn": 3
-};
-
-const gameMode = halfDeckGameSetup;
+import {findFontColor, createCardDeck, shuffleArray, isKing, mapGameLevelToGameSetup} from "./HelperFunctions"
 
 const emptyTarget = -1;
 const idOfEmptyColumnTarget = 0;
 
 class App extends React.Component {
-
     constructor(props) {
         super(props);
+        this.state = {
+            hasGameStarted: false,
+            gameMode: {},
+            columnsOfCards: [],
+            restOfCardDeck: [],
+            bottomCards: [],
+            columnTargets: [],
+            bottomTargets: []
+        };
+    }
+
+    initializeGame = (p_gameLevel) => {
+        const gameMode = mapGameLevelToGameSetup(p_gameLevel);
         let cardDeck = createCardDeck(gameMode.nrOfSuites);
         cardDeck = shuffleArray(cardDeck);
         let cardsPlacedInColumns = cardDeck.slice(0, gameMode.nrOfCols * gameMode.nrOfCardsInColumn);
@@ -39,14 +38,16 @@ class App extends React.Component {
             cardsInColumn[cardsInColumn.length - 1].hidden = false;
             colOfCards.push(cardsInColumn);
         }
-        this.state = {
+        this.setState({
+            gameMode: gameMode,
+            hasGameStarted: true,
             columnsOfCards: colOfCards,
             restOfCardDeck: restOfCards,
             bottomCards: Array.from({length: gameMode.nrOfSuites}, e => []),
             columnTargets: Array(gameMode.nrOfCols).fill({'id': emptyTarget}),
             bottomTargets: Array(gameMode.nrOfSuites).fill({'id': emptyTarget})
-        };
-    }
+        });
+    };
 
     moveCardsToDestColumn = (startingCard, destCol) => {
         let cardsToMove = this.getListOfBoundCards(startingCard);
@@ -145,7 +146,7 @@ class App extends React.Component {
         this.setState(prevState => {
             return {
                 columnTargets: columnTargets,
-                bottomTargets: Array(gameMode.nrOfSuites).fill({'id': emptyTarget})
+                bottomTargets: Array(this.state.gameMode.nrOfSuites).fill({'id': emptyTarget})
             }
         })
     };
@@ -153,8 +154,8 @@ class App extends React.Component {
     deleteTargets = () => {
         this.setState(
             {
-                columnTargets: Array(gameMode.nrOfCols).fill({'id': emptyTarget}),
-                bottomTargets: Array(gameMode.nrOfSuites).fill({'id': emptyTarget})
+                columnTargets: Array(this.state.gameMode.nrOfCols).fill({'id': emptyTarget}),
+                bottomTargets: Array(this.state.gameMode.nrOfSuites).fill({'id': emptyTarget})
             }
         )
     };
@@ -176,47 +177,48 @@ class App extends React.Component {
 
     render = () => {
         return (
-            <div className="card-game-table">
-                <div className="wide-row">
-                    {this.state.columnsOfCards.map((column, colInd) => (
-                        <div key={colInd} style={{position: "relative", height: "0px"}}
-                             className={"solitaire-column"}>
-                            <CardStack
-                                deleteTargets={() => this.deleteTargets()}
-                                createTargets={this.createTargets}
-                                cardsInColumn={column}/>
-                            {
-                                this.state.columnTargets[colInd]['id'] !== emptyTarget ?
-                                    <div className={"card-box"}
-                                         style={{
-                                             position: "relative",
-                                             top: "" + ((column.length - 1) * 9.8 * 15 / 100) + "vw"
-                                         }}>
+            !this.state.hasGameStarted ? <GameStatusForm notify={this.initializeGame}/> :
+                <div className="card-game-table">
+                    <div className="wide-row">
+                        {this.state.columnsOfCards.map((column, colInd) => (
+                            <div key={colInd} style={{position: "relative", height: "0px"}}
+                                 className={"solitaire-column"}>
+                                <CardStack
+                                    deleteTargets={() => this.deleteTargets()}
+                                    createTargets={this.createTargets}
+                                    cardsInColumn={column}/>
+                                {
+                                    this.state.columnTargets[colInd]['id'] !== emptyTarget ?
+                                        <div className={"card-box"}
+                                             style={{
+                                                 position: "relative",
+                                                 top: "" + ((column.length - 1) * 9.8 * 15 / 100) + "vw"
+                                             }}>
+                                            <Target
+                                                moveCard={(src, dst) => this.moveCardsToDestColumn(src, dst)}
+                                                id={colInd}/></div>
+                                        : <div/>
+                                }
+                            </div>
+                        ))}
+                    </div>
+                    <div className="narrow-row" style={{position: "relative", bottom: "20px"}}>
+                        {
+                            this.state.bottomCards.map((cardList, index) => (
+                                <div key={index} className={"card-box"}>
+                                    <CardDeck
+                                        cards={cardList}/>
+                                    <div style={{zIndex: 1}} key={index} className={"target-box"}>
                                         <Target
-                                            moveCard={(src, dst) => this.moveCardsToDestColumn(src, dst)}
-                                            id={colInd}/></div>
-                                    : <div/>
-                            }
-                        </div>
-                    ))}
+                                            moveCard={(src, dst) => this.moveCardToBottomColumn(src, dst)}
+                                            id={index}/>
+                                    </div>
+                                </div>))
+                        }
+                        <div onClick={this.dealNextCards}>
+                            <CardDeck cards={this.state.restOfCardDeck} className={"card-deck"}/></div>
+                    </div>
                 </div>
-                <div className="narrow-row" style={{position: "relative", bottom: "20px"}}>
-                    {
-                        this.state.bottomCards.map((cardList, index) => (
-                            <div key={index} className={"card-box"}>
-                                <CardDeck
-                                    cards={cardList}/>
-                                <div style={{zIndex: 1}} key={index} className={"target-box"}>
-                                    <Target
-                                        moveCard={(src, dst) => this.moveCardToBottomColumn(src, dst)}
-                                        id={index}/>
-                                </div>
-                            </div>))
-                    }
-                    <div onClick={this.dealNextCards}>
-                        <CardDeck cards={this.state.restOfCardDeck} className={"card-deck"}/></div>
-                </div>
-            </div>
         );
     };
 }

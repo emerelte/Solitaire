@@ -1,3 +1,5 @@
+import {easy, medium, hard} from "./GameSetups";
+
 export const findFontColor = (card) => {
     return card.color === 'spades' || card.color === 'clubs' ? 'black' : 'red';
 };
@@ -45,11 +47,15 @@ export const isKing = (card) => {
 export const areCardsInRightOrder = (cards) => {
     if (cards.length < 2)
         return true;
-    for (let i = 1; i< cards.length; ++i)
-    {
-        if (findFontColor(cards[i]) === findFontColor(cards[i - 1]) || cards[i].value !== cards[i - 1].value - 1)  {
+    for (let i = 1; i < cards.length; ++i) {
+        if (findFontColor(cards[i]) === findFontColor(cards[i - 1]) || cards[i].value !== cards[i - 1].value - 1) {
             return false;
         }
     }
     return true;
+};
+
+export const mapGameLevelToGameSetup = (p_level) => {
+    let dict = {0: easy, 1: medium, 2: hard};
+    return dict[p_level];
 };

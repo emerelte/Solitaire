@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^4.8.3",
+    "prop-types": "15.6.1",
     "react": "^16.9.0",
     "react-dnd": "^4.0.2",
     "react-dnd-cjs": "^9.4.0",
@@ -10,8 +12,7 @@
     "react-dnd-html5-backend-cjs": "^9.4.0",
     "react-dom": "^16.9.0",
     "react-dropzone": "^10.1.9",
-    "react-scripts": "3.1.1",
-    "prop-types": "15.6.1"
+    "react-scripts": "3.1.1"
   },
   "scripts": {
     "start": "react-scripts start",

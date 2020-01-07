@@ -60,7 +60,6 @@ class CardStack extends React.Component {
         let bottomCard = this.state.column[0];
         if (this.isLastCardInStack())
             showCard(bottomCard);
-        //TODO dragging active only if cards in right order
         if (bottomCard.hidden)
             return <div style={{position: "absolute", top: "15%"}}>
                 <Card card={bottomCard}/>
