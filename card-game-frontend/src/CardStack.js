@@ -37,10 +37,13 @@ class CardStack extends React.Component {
         };
     }
 
-    componentWillReceiveProps(nextProps) {
-        this.setState({
-            column: nextProps.cardsInColumn
-        });
+    static getDerivedStateFromProps(props, state) {
+        if (props.nrOfCardsInColumn !== state.column) {
+            return {
+                column: props.cardsInColumn
+            };
+        }
+        return null;
     }
 
     isEmptyStack() {
@@ -75,7 +78,6 @@ class CardStack extends React.Component {
                                            cardsInColumn={this.state.column.slice(1, this.state.column.length)}/>
                     </div>);
             else {
-                console.log(this.state.column);
                 return <div style={{position: "absolute", top: "15%"}}>
                     <Card card={bottomCard}/>
                     <DragItemContainer deleteTargets={() => this.props.deleteTargets()}

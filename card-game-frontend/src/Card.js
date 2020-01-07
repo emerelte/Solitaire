@@ -12,10 +12,13 @@ export default class Card extends React.Component {
         };
     }
 
-    componentWillReceiveProps(nextProps) {
-        this.setState({
-            card: nextProps.card
-        });
+    static getDerivedStateFromProps(props, state) {
+        if (props.card !== state.card) {
+            return {
+                card: props.card
+            };
+        }
+        return null;
     }
 
     render = () => {

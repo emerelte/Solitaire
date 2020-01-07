@@ -7,33 +7,44 @@ import {DragDropContext} from 'react-dnd'
 import Target from "./Target";
 import CardDeck from "./CardDeck";
 import {findFontColor, createCardDeck, shuffleArray, isKing} from "./HelperFunctions"
-import {string} from "prop-types";
+
+const halfDeckGameSetup = {
+    "nrOfSuites": 2,
+    "nrOfCols": 7,
+    "nrOfCardsInColumn": 2
+};
+
+const fullDeckGameSetup = {
+    "nrOfSuites": 4,
+    "nrOfCols": 8,
+    "nrOfCardsInColumn": 3
+};
+
+const gameMode = halfDeckGameSetup;
 
 const emptyTarget = -1;
-const nrOfCols = 8;
-const nrOfCardsInColumn = 4;
 const idOfEmptyColumnTarget = 0;
 
 class App extends React.Component {
 
     constructor(props) {
         super(props);
-        let cardDeck = createCardDeck();
+        let cardDeck = createCardDeck(gameMode.nrOfSuites);
         cardDeck = shuffleArray(cardDeck);
-        let cardsPlacedInColumns = cardDeck.slice(0, nrOfCols * nrOfCardsInColumn);
-        let restOfCards = cardDeck.slice(nrOfCols * nrOfCardsInColumn, cardDeck.length);
+        let cardsPlacedInColumns = cardDeck.slice(0, gameMode.nrOfCols * gameMode.nrOfCardsInColumn);
+        let restOfCards = cardDeck.slice(gameMode.nrOfCols * gameMode.nrOfCardsInColumn, cardDeck.length);
         let colOfCards = [];
-        for (let i = 0; i < nrOfCols; ++i) {
-            let cardsInColumn = cardsPlacedInColumns.slice(i * nrOfCardsInColumn, (i + 1) * nrOfCardsInColumn);
+        for (let i = 0; i < gameMode.nrOfCols; ++i) {
+            let cardsInColumn = cardsPlacedInColumns.slice(i * gameMode.nrOfCardsInColumn, (i + 1) * gameMode.nrOfCardsInColumn);
             cardsInColumn[cardsInColumn.length - 1].hidden = false;
             colOfCards.push(cardsInColumn);
         }
         this.state = {
             columnsOfCards: colOfCards,
             restOfCardDeck: restOfCards,
-            bottomCards: [[], [], [], []],
-            columnTargets: Array(nrOfCols).fill({'id': emptyTarget}),
-            bottomTargets: [{'id': emptyTarget}, {'id': emptyTarget}, {'id': emptyTarget}, {'id': emptyTarget}]
+            bottomCards: Array.from({length: gameMode.nrOfSuites}, e => []),
+            columnTargets: Array(gameMode.nrOfCols).fill({'id': emptyTarget}),
+            bottomTargets: Array(gameMode.nrOfSuites).fill({'id': emptyTarget})
         };
     }
 
@@ -86,7 +97,6 @@ class App extends React.Component {
     }
 
     moveCardToColumn = (card, dest) => {
-        console.log(card, dest);
         this.setState(prevState => {
             return {
                 columnsOfCards: prevState.columnsOfCards.map(k => k.filter(e => e.id !== card.id))
@@ -135,7 +145,7 @@ class App extends React.Component {
         this.setState(prevState => {
             return {
                 columnTargets: columnTargets,
-                bottomTargets: [{'id': emptyTarget}, {'id': emptyTarget}, {'id': emptyTarget}, {'id': emptyTarget}]
+                bottomTargets: Array(gameMode.nrOfSuites).fill({'id': emptyTarget})
             }
         })
     };
@@ -143,8 +153,8 @@ class App extends React.Component {
     deleteTargets = () => {
         this.setState(
             {
-                'columnTargets': Array(nrOfCols).fill({'id': emptyTarget}),
-                'bottomTargets': [{'id': emptyTarget}, {'id': emptyTarget}, {'id': emptyTarget}, {'id': emptyTarget}]
+                columnTargets: Array(gameMode.nrOfCols).fill({'id': emptyTarget}),
+                bottomTargets: Array(gameMode.nrOfSuites).fill({'id': emptyTarget})
             }
         )
     };
@@ -165,7 +175,6 @@ class App extends React.Component {
     };
 
     render = () => {
-        console.log(this.state.columnTargets);
         return (
             <div className="card-game-table">
                 <div className="wide-row">

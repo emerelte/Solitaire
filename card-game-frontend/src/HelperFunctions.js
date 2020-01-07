@@ -2,9 +2,13 @@ export const findFontColor = (card) => {
     return card.color === 'spades' || card.color === 'clubs' ? 'black' : 'red';
 };
 
-export const createCardDeck = () => {
+export const createCardDeck = (p_nrOfSuites) => {
     let cardDeck = [];
-    const listOfColors = ['spades', 'clubs', 'hearts', 'diams'];
+    let listOfColors = [];
+    if (p_nrOfSuites === 4)
+        listOfColors = ['spades', 'clubs', 'hearts', 'diams'];
+    else if (p_nrOfSuites === 2)
+        listOfColors = ['spades', 'hearts'];
     let i = 0;
     for (const color of listOfColors) {
         for (let val = 1; val < 14; ++val) {
