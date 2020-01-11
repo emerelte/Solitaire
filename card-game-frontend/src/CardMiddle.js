@@ -266,40 +266,40 @@ export default class CardMiddle extends React.Component {
                     </div>
                 );
             case 11:
-                switch (this.props.color) {
-                    case "spades":
-                        return (
-                            <div className={"card-middle-column"}>
-                                <img alt='jackSpades' style={{width: '100%', height: '100%'}} src={jackSpades}>
-                                </img>
-                            </div>
-                        );
-                    case "diams":
-                        return (
-                            <div className={"card-middle-column"}>
-                                <img alt='jackDiams' style={{width: '100%', height: '100%'}} src={jackDiams}>
-                                </img>
-                            </div>
-                        );
-                    case "hearts":
-                        return (
-                            <div className={"card-middle-column"}>
-                                <img alt='jackHearts' style={{width: '100%', height: '100%'}} src={jackHearts}>
-                                </img>
-                            </div>
-                        );
-                    case "clubs":
-                        return (
-                            <div className={"card-middle-column"}>
-                                <img alt='jackClubs' style={{width: '100%', height: '100%'}} src={jackClubs}>
-                                </img>
-                            </div>
-                        );
-                    default:
-                        return (
-                            <div className={"card-middle-column"}/>
-                        )
-                }
+            switch (this.props.color) {
+                case "spades":
+                    return (
+                        <div className={"card-middle-column"}>
+                            <img alt='jackSpades' style={{width: '100%', height: '100%'}} src={jackSpades}>
+                            </img>
+                        </div>
+                    );
+                case "diams":
+                    return (
+                        <div className={"card-middle-column"}>
+                            <img alt='jackDiams' style={{width: '100%', height: '100%'}} src={jackDiams}>
+                            </img>
+                        </div>
+                    );
+                case "hearts":
+                    return (
+                        <div className={"card-middle-column"}>
+                            <img alt='jackHearts' style={{width: '100%', height: '100%'}} src={jackHearts}>
+                            </img>
+                        </div>
+                    );
+                case "clubs":
+                    return (
+                        <div className={"card-middle-column"}>
+                            <img alt='jackClubs' style={{width: '100%', height: '100%'}} src={jackClubs}>
+                            </img>
+                        </div>
+                    );
+                default:
+                    return (
+                        <div className={"card-middle-column"}/>
+                    )
+            }
             case 12:
                 switch (this.props.color) {
                     case "spades":

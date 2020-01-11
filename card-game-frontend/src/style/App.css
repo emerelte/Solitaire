@@ -24,7 +24,7 @@ html, body {
     padding: 60px;
 }
 
-.wide-row {
+.row-with-card-columns {
     display: flex;
     flex-direction: row;
     justify-content: center;

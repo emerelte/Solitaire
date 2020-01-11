@@ -1,6 +1,5 @@
 import React from "react";
 import "./style/GameStatusForm.css";
-import {makeStyles} from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Slider from "@material-ui/core/Slider";
 import Button from "@material-ui/core/Button";
@@ -58,7 +57,7 @@ export default class GameStatusForm extends React.Component {
                 left: "45%"
             }}
                     onClick={this.handleClick}>
-                Submit
+                Play
             </Button>
         </div>
     };

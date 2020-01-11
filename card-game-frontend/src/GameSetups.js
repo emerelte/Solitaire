@@ -1,3 +1,5 @@
+//TODO check if the settings are correct and allow to play at the chosen level
+
 export const easy = {
     "nrOfSuites": 2,
     "nrOfCols": 7,

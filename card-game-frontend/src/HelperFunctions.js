@@ -32,8 +32,8 @@ export const shuffleArray = (arr) => {
     return arr;
 };
 
-export const isHiddenCard = (card) => {
-    return card.hidden;
+export const createShuffledCardDeck = (p_nrOfSuites) => {
+    return shuffleArray(createCardDeck(p_nrOfSuites));
 };
 
 export const showCard = (card) => {
@@ -55,7 +55,24 @@ export const areCardsInRightOrder = (cards) => {
     return true;
 };
 
+export const isPossibleToMoveCardBetweenColumns = (movingCard, targetCard) => {
+    return findFontColor(movingCard) !== findFontColor(targetCard) &&
+        movingCard.value === targetCard.value - 1;
+};
+
+
 export const mapGameLevelToGameSetup = (p_level) => {
     let dict = {0: easy, 1: medium, 2: hard};
     return dict[p_level];
+};
+
+export const convertValueOfCardToDisplayedSymbol = (p_cardValue) => {
+    const displayedSymbols = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'B', 'Q', 'K'];
+    return displayedSymbols[p_cardValue - 1];
+};
+
+export const decodeHtml = (html) => {
+    let txt = document.createElement("textarea");
+    txt.innerHTML = html;
+    return txt.value;
 };
