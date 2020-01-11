@@ -1,4 +1,5 @@
 import {easy, medium, hard} from "./GameSetups";
+import {string} from "prop-types";
 
 export const findFontColor = (card) => {
     return card.color === 'spades' || card.color === 'clubs' ? 'black' : 'red';
@@ -75,4 +76,32 @@ export const decodeHtml = (html) => {
     let txt = document.createElement("textarea");
     txt.innerHTML = html;
     return txt.value;
+};
+
+const convertMinutesToHours = (p_minutes) => {
+    return p_minutes/60;
+};
+
+export const formatReadableTimeFromMiliseconds = (p_timeInMiliseconds) => {
+    let l_formattedTime = "";
+    const l_seconds = p_timeInMiliseconds.getSeconds();
+    const l_minutes = p_timeInMiliseconds.getMinutes();
+    const l_hours = p_timeInMiliseconds.getHours() + convertMinutesToHours(p_timeInMiliseconds.getTimezoneOffset());
+
+    if (l_hours < 10) {
+        l_formattedTime += "0";
+    }
+    l_formattedTime += l_hours + ":";
+
+    if (l_minutes < 10) {
+        l_formattedTime += "0";
+    }
+    l_formattedTime += l_minutes + ":";
+
+    if (l_seconds < 10) {
+        l_formattedTime += "0";
+    }
+    l_formattedTime += l_seconds;
+
+    return l_formattedTime;
 };

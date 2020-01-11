@@ -5,7 +5,6 @@ import {idOfEmptyTarget} from "./Constants.js";
 
 export default class CardColumn extends React.Component {
 
-
     render() {
         return (
             <div className="row-with-card-columns">

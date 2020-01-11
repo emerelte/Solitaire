@@ -1,0 +1,7 @@
+.indicator {
+    display: inline-flex;
+    flex-direction: column;
+    width: 10%;
+    position: relative;
+    bottom: -100%;
+}

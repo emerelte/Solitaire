@@ -1,11 +1,12 @@
 import React from "react";
 import Target from "./Target";
 import CardDeck from "./CardDeck";
+import './style/BottomCards.css'
 
 export default class BottomCards extends React.Component {
     render() {
         return (
-            <div className="narrow-row" style={{position: "relative", bottom: "20px"}}>
+            <div className="bottom-cards">
                 {
                     this.props.gameManager.state.bottomCards.map((cardList, index) => (
                         <div key={index} className={"card-box"}>
@@ -13,7 +14,7 @@ export default class BottomCards extends React.Component {
                                 cards={cardList}/>
                             <div style={{zIndex: 1}} key={index} className={"target-box"}>
                                 <Target
-                                    moveCard={(src, dst) => this.props.gameManager.moveCardToBottomColumn(src, dst)}
+                                    moveCard={(src, dst) => this.props.gameManager.moveCardToBottomColumnIfIsNextInOrder(src, dst)}
                                     id={index}/>
                             </div>
                         </div>))

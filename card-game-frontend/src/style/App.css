@@ -15,7 +15,7 @@ html, body {
     overflow: hidden;
 }
 
-.narrow-row {
+.bottom-row {
     width: 100%;
     display: flex;
     flex-direction: row;

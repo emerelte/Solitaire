@@ -14,6 +14,7 @@ import {
 import CardColumns from "./CardColumns";
 import {idOfEmptyTarget, idOfTargetOfEmptyColumn} from "./Constants.js";
 import BottomCards from "./BottomCards";
+import TimeAndCounterIndicator from "./TimeAndCounterIndicator";
 
 class App extends React.Component {
     constructor(props) {
@@ -25,7 +26,8 @@ class App extends React.Component {
             bottomCards: [],
             restOfCardDeck: [],
             columnTargets: [],
-            bottomTargets: []
+            bottomTargets: [],
+            movesCounter: 0
         };
     }
 
@@ -53,7 +55,7 @@ class App extends React.Component {
         });
     };
 
-    moveCardToBottomColumn(cardToMove, destCol) {
+    moveCardToBottomColumnIfIsNextInOrder(cardToMove, destCol) {
         if (!this.isNextCardInOrder(cardToMove, destCol)) {
             return;
         }
@@ -68,6 +70,7 @@ class App extends React.Component {
                 bottomCards: prevState.bottomCards
             }
         });
+        this.incrementMovesCounter();
     }
 
     isNextCardInOrder(cardToMove, destCol) {
@@ -132,7 +135,17 @@ class App extends React.Component {
             this.moveCardToColumn(cardsToMove[i], destCol);
         }
         this.deleteTargets();
+        this.incrementMovesCounter();
+        console.log(this.state.movesCounter);
     };
+
+    incrementMovesCounter() {
+        this.setState(prevState => {
+            return ({
+                movesCounter: prevState.movesCounter + 1
+            })
+        });
+    }
 
     getListOfBoundCards(card) {
         let sourceCardCoords = this.getCardCoords(card);
@@ -177,7 +190,10 @@ class App extends React.Component {
             !this.state.hasGameStarted ? <GameStatusForm notify={this.initializeGame}/> :
                 <div className="card-game-table">
                     <CardColumns gameManager={this}/>
-                    <BottomCards gameManager={this}/>
+                    <div className="bottom-row" style={{position: "relative", bottom: "20px"}}>
+                        <TimeAndCounterIndicator movesCounter={this.state.movesCounter}/>
+                        <BottomCards gameManager={this}/>
+                    </div>
                 </div>
         );
     };
