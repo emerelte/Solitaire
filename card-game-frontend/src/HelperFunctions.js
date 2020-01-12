@@ -1,5 +1,4 @@
 import {easy, medium, hard} from "./GameSetups";
-import {string} from "prop-types";
 
 export const findFontColor = (card) => {
     return card.color === 'spades' || card.color === 'clubs' ? 'black' : 'red';
@@ -41,8 +40,12 @@ export const showCard = (card) => {
     card.hidden = false;
 };
 
-export const isKing = (card) => {
-    return card.value === 13
+export const isKing = (p_card) => {
+    return p_card.value === 13;
+};
+
+export const isAce = (p_card) => {
+    return p_card.value === 1;
 };
 
 export const areCardsInRightOrder = (cards) => {
@@ -104,4 +107,16 @@ export const formatReadableTimeFromMiliseconds = (p_timeInMiliseconds) => {
     l_formattedTime += l_seconds;
 
     return l_formattedTime;
+};
+
+export const isRightCardToPlaceInTarget = (p_card, p_lastTargetCard) => {
+    if (p_lastTargetCard === undefined) {
+        if (isAce(p_card))
+            return true;
+    } else {
+        if (p_card.color === p_lastTargetCard.color
+            && p_card.value === p_lastTargetCard.value + 1)
+            return true;
+    }
+    return false;
 };

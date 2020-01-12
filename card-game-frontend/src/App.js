@@ -1,15 +1,15 @@
 import React from 'react';
+import HTML5Backend from 'react-dnd-html5-backend'
 import './style/App.css';
 import './style/CardDeck.css';
 import GameStatusForm from "./GameStatusForm"
-import HTML5Backend from 'react-dnd-html5-backend'
 import {DragDropContext} from 'react-dnd'
 import {
     createShuffledCardDeck,
     isKing,
     mapGameLevelToGameSetup,
     showCard,
-    isPossibleToMoveCardBetweenColumns
+    isPossibleToMoveCardBetweenColumns, isRightCardToPlaceInTarget
 } from "./HelperFunctions"
 import CardColumns from "./CardColumns";
 import {idOfEmptyTarget, idOfTargetOfEmptyColumn} from "./Constants.js";
@@ -43,7 +43,6 @@ class App extends React.Component {
             colOfCards.push(cardsInColumn);
         }
 
-        //TODO bottom targets should appear only if it's possible to move card there
         this.setState({
             hasGameStarted: true,
             gameMode: gameMode,
@@ -55,10 +54,7 @@ class App extends React.Component {
         });
     };
 
-    moveCardToBottomColumnIfIsNextInOrder(cardToMove, destCol) {
-        if (!this.isNextCardInOrder(cardToMove, destCol)) {
-            return;
-        }
+    moveCardToBottomColumn(cardToMove, destCol) {
         this.setState(prevState => {
             return {
                 columnsOfCards: prevState.columnsOfCards.map(k => k.filter(e => e.id !== cardToMove.id))
@@ -71,18 +67,6 @@ class App extends React.Component {
             }
         });
         this.incrementMovesCounter();
-    }
-
-    isNextCardInOrder(cardToMove, destCol) {
-        if (this.state.bottomCards[destCol].length === 0) {
-            if (cardToMove.value === 1)
-                return true;
-        } else {
-            if (cardToMove.color === this.state.bottomCards[destCol][this.state.bottomCards[destCol].length - 1].color
-                && cardToMove.value === this.state.bottomCards[destCol][this.state.bottomCards[destCol].length - 1].value + 1)
-                return true;
-        }
-        return false;
     }
 
     dealNextCards = () => {
@@ -100,23 +84,34 @@ class App extends React.Component {
         });
     };
 
-    createTargets = (card) => {
+    createTargets = (p_card) => {
         let columnTargets = [];
         this.state.columnsOfCards.forEach((column, index) => {
                 if (column.length === 0) {
-                    if (isKing(card))
+                    if (isKing(p_card))
                         columnTargets.push({'id': idOfTargetOfEmptyColumn});
                     else
                         columnTargets.push({'id': idOfEmptyTarget});
-                } else if (isPossibleToMoveCardBetweenColumns(card, column[column.length - 1]))
+                } else if (isPossibleToMoveCardBetweenColumns(p_card, column[column.length - 1]))
                     columnTargets.push({'id': column[column.length - 1].id});
                 else
                     columnTargets.push({'id': idOfEmptyTarget});
             }
         );
 
+        let bottomTargets = [];
+        this.state.bottomTargets.forEach((column, index) => {
+            if (isRightCardToPlaceInTarget(p_card, this.state.bottomCards[index][this.state.bottomCards[index].length - 1])) {
+                bottomTargets.push({'id': index});
+            } else {
+                bottomTargets.push({'id': idOfEmptyTarget})
+            }
+        });
+
+
         this.setState({
             columnTargets: columnTargets,
+            bottomTargets: bottomTargets
         })
     };
 
@@ -136,7 +131,6 @@ class App extends React.Component {
         }
         this.deleteTargets();
         this.incrementMovesCounter();
-        console.log(this.state.movesCounter);
     };
 
     incrementMovesCounter() {

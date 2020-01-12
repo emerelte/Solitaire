@@ -2,6 +2,7 @@ import React from "react";
 import Target from "./Target";
 import CardDeck from "./CardDeck";
 import './style/BottomCards.css'
+import {idOfEmptyTarget} from "./Constants";
 
 export default class BottomCards extends React.Component {
     render() {
@@ -12,11 +13,14 @@ export default class BottomCards extends React.Component {
                         <div key={index} className={"card-box"}>
                             <CardDeck
                                 cards={cardList}/>
-                            <div style={{zIndex: 1}} key={index} className={"target-box"}>
-                                <Target
-                                    moveCard={(src, dst) => this.props.gameManager.moveCardToBottomColumnIfIsNextInOrder(src, dst)}
-                                    id={index}/>
-                            </div>
+                            {
+                                this.props.gameManager.state.bottomTargets[index]['id'] !== idOfEmptyTarget ?
+                                <div style={{zIndex: 1}} key={index} className={"target-box"}>
+                                    <Target
+                                        moveCard={(src, dst) => this.props.gameManager.moveCardToBottomColumn(src, dst)}
+                                        id={index}/>
+                                </div> : <div/>
+                            }
                         </div>))
                 }
                 <div onClick={this.props.gameManager.dealNextCards}>
