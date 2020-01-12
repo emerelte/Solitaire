@@ -1,7 +1,14 @@
-.indicator {
-    display: inline-flex;
-    flex-direction: column;
-    width: 10%;
+.indicator-positioner {
+    display:flex;
+    align-items:flex-start;
+    align-content:flex-start;
+
     position: relative;
-    bottom: -100%;
+    top: 50%;
+    left: 1%;
+}
+
+.indicator {
+    border: solid;
+    padding: 5%;
 }

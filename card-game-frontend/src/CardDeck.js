@@ -17,7 +17,7 @@ export default class CardDeck extends React.Component {
 
     render = () => {
         return (
-            <div className={"card-deck"}>
+            <div className={"card-deck " + this.props.className}>
                 {
                     this.props.cards.map((card, index) => (
                         <div key={card['id']} style={{zIndex: index + 1}}

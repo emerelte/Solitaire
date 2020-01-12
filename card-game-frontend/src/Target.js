@@ -25,10 +25,10 @@ class Target extends Component {
 
     render() {
         const {connectDropTarget, hovered} = this.props;
-        const borderColor = hovered ? 'red' : 'black';
+        const l_opacity = hovered ? 1 : 0;
 
         return connectDropTarget(
-            <div className="target" style={{borderColor: borderColor}}>
+            <div className="target" style={{opacity: l_opacity}}>
             </div>
         );
     }

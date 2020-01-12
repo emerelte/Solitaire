@@ -3,7 +3,7 @@
 export const easy = {
     "nrOfSuites": 2,
     "nrOfCols": 7,
-    "nrOfCardsInColumn": 2
+    "nrOfCardsInColumn": 1
 };
 
 export const medium = {

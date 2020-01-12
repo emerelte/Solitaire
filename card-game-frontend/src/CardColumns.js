@@ -2,6 +2,7 @@ import React from "react";
 import CardStack from "./CardStack";
 import Target from "./Target";
 import {idOfEmptyTarget} from "./Constants.js";
+import {calculateTopPositionOfColumnTarget} from "./HelperFunctions";
 
 export default class CardColumn extends React.Component {
 
@@ -20,7 +21,7 @@ export default class CardColumn extends React.Component {
                                 <div className={"card-box"}
                                      style={{
                                          position: "relative",
-                                         top: "" + ((column.length - 1) * 9.8 * 15 / 100) + "vw"
+                                         top: "" + calculateTopPositionOfColumnTarget(column.length) + "vw"
                                      }}>
                                     <Target
                                         moveCard={(src, dst) => this.props.gameManager.moveCardsToDestColumn(src, dst)}

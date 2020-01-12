@@ -82,7 +82,7 @@ export const decodeHtml = (html) => {
 };
 
 const convertMinutesToHours = (p_minutes) => {
-    return p_minutes/60;
+    return p_minutes / 60;
 };
 
 export const formatReadableTimeFromMiliseconds = (p_timeInMiliseconds) => {
@@ -119,4 +119,8 @@ export const isRightCardToPlaceInTarget = (p_card, p_lastTargetCard) => {
             return true;
     }
     return false;
+};
+
+export const calculateTopPositionOfColumnTarget = (p_columnLength) => {
+    return p_columnLength === 0 ? 0 : (p_columnLength-1) * (9.4 * 0.15);
 };

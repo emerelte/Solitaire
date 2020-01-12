@@ -18,9 +18,11 @@ export default class TimeAndCounterIndicator extends React.Component {
         }.bind(this), 1000);
         const passedTime = new Date(this.state.curTime - this.state.begTime);
         return (
-            <div className={"indicator"}>
-                <div>{"Moves: " + this.props.movesCounter}</div>
-                <div>{"Time: " + formatReadableTimeFromMiliseconds(passedTime)}</div>
+            <div className={"indicator-positioner"}>
+                <div className={"indicator"}>
+                    <div>{"Moves: " + this.props.movesCounter}</div>
+                    <div>{"Time: " + formatReadableTimeFromMiliseconds(passedTime)}</div>
+                </div>
             </div>
         );
     }
