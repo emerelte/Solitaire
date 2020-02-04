@@ -4,19 +4,9 @@ import {formatReadableTimeFromMiliseconds} from "./HelperFunctions";
 
 
 export default class TimeAndCounterIndicator extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            begTime: new Date().getTime(),
-            curTime: null,
-        };
-    }
 
     render() {
-        setInterval(function () {
-            this.setState({curTime: new Date().getTime()});
-        }.bind(this), 1000);
-        const passedTime = new Date(this.state.curTime - this.state.begTime);
+        const passedTime = new Date(this.props.curTime - this.props.begTime);
         return (
             <div className={"indicator-positioner"}>
                 <div className={"indicator"}>

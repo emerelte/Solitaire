@@ -5,33 +5,18 @@ import CardSide from "./CardSide";
 import {findFontColor} from "./HelperFunctions"
 
 export default class Card extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            card: props.card,
-        };
-    }
-
-    static getDerivedStateFromProps(props, state) {
-        if (props.card !== state.card) {
-            return {
-                card: props.card
-            };
-        }
-        return null;
-    }
 
     render = () => {
-        if (this.state.card.hidden)
-            return <div style={{color: findFontColor(this.state.card)}}
+        if (this.props.card.hidden)
+            return <div style={{color: findFontColor(this.props.card)}}
                         className={"card back"}>
             </div>;
         else
-            return <div style={{color: findFontColor(this.state.card)}}
+            return <div style={{color: findFontColor(this.props.card)}}
                         className={"card"}>
-                <CardSide value={this.state.card.value} color={this.state.card.color}/>
-                <CardMiddle value={this.state.card.value} color={this.state.card.color}/>
-                <CardSide value={this.state.card.value} color={this.state.card.color}/>
+                <CardSide value={this.props.card.value} color={this.props.card.color}/>
+                <CardMiddle value={this.props.card.value} color={this.props.card.color}/>
+                <CardSide value={this.props.card.value} color={this.props.card.color}/>
             </div>;
     }
 }

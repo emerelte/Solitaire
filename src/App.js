@@ -15,6 +15,7 @@ import CardColumns from "./CardColumns";
 import {idOfEmptyTarget, idOfTargetOfEmptyColumn} from "./Constants.js";
 import BottomCards from "./BottomCards";
 import TimeAndCounterIndicator from "./TimeAndCounterIndicator";
+import { initGame } from './actions'
 
 class App extends React.Component {
     constructor(props) {
@@ -27,7 +28,9 @@ class App extends React.Component {
             restOfCardDeck: [],
             columnTargets: [],
             bottomTargets: [],
-            movesCounter: 0
+            movesCounter: 0,
+            begTime: null,
+            curTime: null
         };
     }
 
@@ -180,12 +183,19 @@ class App extends React.Component {
     };
 
     render = () => {
+        //TODO start timer when the game begins
+        if (this.state.hasGameStarted) {
+            setInterval(function () {
+                this.setState({curTime: new Date().getTime()});
+            }.bind(this), 1000);
+        }
         return (
             !this.state.hasGameStarted ? <GameStatusForm notify={this.initializeGame}/> :
                 <div className="card-game-table">
                     <CardColumns gameManager={this}/>
                     <div className="bottom-row" style={{position: "relative", bottom: "20px"}}>
-                        <TimeAndCounterIndicator movesCounter={this.state.movesCounter}/>
+                        <TimeAndCounterIndicator begTime={this.state.begTime} curTime={this.state.curTime}
+                                                 movesCounter={this.state.movesCounter}/>
                         <BottomCards gameManager={this}/>
                     </div>
                 </div>
