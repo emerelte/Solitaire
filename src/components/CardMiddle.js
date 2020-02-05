@@ -1,18 +1,18 @@
 import React from 'react';
-import './style/CardMiddle.css';
+import '../style/CardMiddle.css';
 import CardColor from "./CardColor";
-import jackClubs from "./images/jackClubs.png"
-import jackHearts from "./images/jackHearts.png"
-import jackDiams from "./images/jackDiams.png"
-import jackSpades from "./images/jackSpades.png"
-import queenClubs from "./images/queenClubs.png"
-import queenHearts from "./images/queenHearts.png"
-import queenDiams from "./images/queenDiams.png"
-import queenSpades from "./images/queenSpades.png"
-import kingClubs from "./images/kingClubs.png"
-import kingHearts from "./images/kingHearts.png"
-import kingDiams from "./images/kingDiams.png"
-import kingSpades from "./images/kingSpades.png"
+import jackClubs from "../images/jackClubs.png"
+import jackHearts from "../images/jackHearts.png"
+import jackDiams from "../images/jackDiams.png"
+import jackSpades from "../images/jackSpades.png"
+import queenClubs from "../images/queenClubs.png"
+import queenHearts from "../images/queenHearts.png"
+import queenDiams from "../images/queenDiams.png"
+import queenSpades from "../images/queenSpades.png"
+import kingClubs from "../images/kingClubs.png"
+import kingHearts from "../images/kingHearts.png"
+import kingDiams from "../images/kingDiams.png"
+import kingSpades from "../images/kingSpades.png"
 
 
 export default class CardMiddle extends React.Component {

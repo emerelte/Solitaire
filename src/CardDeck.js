@@ -1,6 +1,6 @@
 import React from 'react';
 import './style/CardSide.css';
-import Card from "./Card.js";
+import Card from "./components/Card.js";
 
 export default class CardDeck extends React.Component {
 
