@@ -1,6 +1,6 @@
 import React from 'react';
-import '../style/CardValue.css';
-import {convertValueOfCardToDisplayedSymbol} from "../HelperFunctions";
+import '../../style/CardValue.css';
+import {convertValueOfCardToDisplayedSymbol} from "../../HelperFunctions";
 
 
 export default class CardValue extends React.Component {

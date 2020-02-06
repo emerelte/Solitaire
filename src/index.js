@@ -11,7 +11,7 @@ const store = createStore(rootReducer);
 
 setInterval(function () {
     console.log(store.getState());
-}.bind(this), 1000);
+}.bind(this), 3000);
 
 ReactDOM.render(
     <Provider store={store}>

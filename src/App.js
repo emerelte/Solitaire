@@ -11,12 +11,12 @@ import {
     showCard,
     isPossibleToMoveCardBetweenColumns, isRightCardToPlaceInTarget
 } from "./HelperFunctions"
-import CardColumns from "./components/CardColumns";
+import CardColumns from "./components/Presentional/CardColumns";
 import {idOfEmptyTarget, idOfTargetOfEmptyColumn} from "./Constants.js";
-import BottomCards from "./BottomCards";
-import TimeAndCounterIndicator from "./TimeAndCounterIndicator";
+import BottomCards from "./components/Logical/BottomCards";
+import TimeAndCounterIndicator from "./components/Logical/TimeAndCounterIndicator";
 import { initGame } from './actions'
-import CardValue from "./components/CardValue";
+import CardValue from "./components/Presentional/CardValue";
 import VisibleCardColumns from "./components/VisibleCardColumns";
 import MyButton from "./components/MyButton";
 
@@ -195,13 +195,11 @@ class App extends React.Component {
         return (
             // !this.state.hasGameStarted ? <GameStatusForm notify={this.initializeGame}/> :
                 <div className="card-game-table">
-                    <VisibleCardColumns/>
+                    <div className="bottom-row" style={{position: "relative", bottom: "20px"}}>
+                        <TimeAndCounterIndicator/>
+                        <BottomCards/>
+                    </div>
                     <MyButton/>
-                    {/*<div className="bottom-row" style={{position: "relative", bottom: "20px"}}>*/}
-                    {/*    <TimeAndCounterIndicator begTime={this.state.begTime} curTime={this.state.curTime}*/}
-                    {/*                             movesCounter={this.state.movesCounter}/>*/}
-                    {/*    <BottomCards gameManager={this}/>*/}
-                    {/*</div>*/}
                 </div>
         );
     };

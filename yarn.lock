@@ -4071,7 +4071,7 @@ fb-watchman@^2.0.0:
   dependencies:
     bser "^2.0.0"
 
-fbjs@^0.8.16:
+fbjs@^0.8.16, fbjs@^0.8.9:
   version "0.8.17"
   resolved "https://registry.yarnpkg.com/fbjs/-/fbjs-0.8.17.tgz#c4d598ead6949112653d6588b01a5cdcd9f90fdd"
   integrity sha1-xNWY6taUkRJlPWWIsBpc3Nn5D90=
@@ -8198,6 +8198,14 @@ rc@^1.2.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
+react-addons-update@^15.6.2:
+  version "15.6.2"
+  resolved "https://registry.yarnpkg.com/react-addons-update/-/react-addons-update-15.6.2.tgz#e53753c5b34887974510c882d7fb075851d5e504"
+  integrity sha1-5TdTxbNIh5dFEMiC1/sHWFHV5QQ=
+  dependencies:
+    fbjs "^0.8.9"
+    object-assign "^4.1.0"
+
 react-app-polyfill@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/react-app-polyfill/-/react-app-polyfill-1.0.2.tgz#2a51175885c88245a2a356dc46df29f38ec9f060"
@@ -8486,6 +8494,14 @@ redux@^4.0.0, redux@^4.0.4:
   version "4.0.4"
   resolved "https://registry.yarnpkg.com/redux/-/redux-4.0.4.tgz#4ee1aeb164b63d6a1bcc57ae4aa0b6e6fa7a3796"
   integrity sha512-vKv4WdiJxOWKxK0yRoaK3Y4pxxB0ilzVx6dszU2W8wLxlb2yikRph4iV/ymtdJ6ZxpBLFbyrxklnT5yBbQSl3Q==
+  dependencies:
+    loose-envify "^1.4.0"
+    symbol-observable "^1.2.0"
+
+redux@latest:
+  version "4.0.5"
+  resolved "https://registry.yarnpkg.com/redux/-/redux-4.0.5.tgz#4db5de5816e17891de8a80c424232d06f051d93f"
+  integrity sha512-VSz1uMAH24DM6MF72vcojpYPtrTUu3ByVWfPL1nPfVRb5mZVTve5GnNCUV53QM/BZ66xfWrm0CTWoM+Xlz8V1w==
   dependencies:
     loose-envify "^1.4.0"
     symbol-observable "^1.2.0"
@@ -9849,6 +9865,11 @@ upath@^1.1.1:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/upath/-/upath-1.1.2.tgz#3db658600edaeeccbe6db5e684d67ee8c2acd068"
   integrity sha512-kXpym8nmDmlCBr7nKdIx8P2jNBa+pBpIUFRnKJ4dr8htyYGJFokkr2ZvERRtUN+9SY+JqXouNgUPtv6JQva/2Q==
+
+update-immutable@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/update-immutable/-/update-immutable-1.5.0.tgz#dacb4e4e4cb6c038208de82ff0e9ac9caf9ab8ed"
+  integrity sha512-57D/Vs2EG4xk3TxR+3kJINbH2WLDyBurWhns02F9iJxcbXTfhP4r8Cs9iWCAWn9s3ED1l2XsttreB11Vcm75VQ==
 
 upper-case@^1.1.1:
   version "1.1.3"

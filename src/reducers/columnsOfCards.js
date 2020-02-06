@@ -1,16 +1,11 @@
 let id = 0;
 
 const columnsOfCards = (state = [], action) => {
-    console.log("XDDD");
+    console.log(action);
     switch (action.type) {
-        case 'ADD_CARD':
+        case 'INIT_GAME':
             return [
-                ...state,
-                {
-                    hidden: false,
-                    value: 1,
-                    color: "clubs"
-                }
+                action.columnsOfCards
             ];
         default:
             return state

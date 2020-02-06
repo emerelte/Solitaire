@@ -1,8 +1,8 @@
 import React from 'react';
-import '../style/Card.css';
+import '../../style/Card.css';
 import CardMiddle from './CardMiddle.js'
 import CardSide from "./CardSide";
-import {findFontColor} from "../HelperFunctions"
+import {findFontColor} from "../../HelperFunctions"
 
 export default class Card extends React.Component {
 

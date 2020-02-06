@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import CardColumns from "./CardColumns";
+import CardColumns from "./Presentional/CardColumns";
 import columnsOfCards from "../reducers/columnsOfCards";
 
 const mapStateToProps = state => ({

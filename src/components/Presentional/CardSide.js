@@ -1,5 +1,5 @@
 import React from 'react';
-import '../style/CardSide.css';
+import '../../style/CardSide.css';
 import CardColor from "./CardColor";
 import CardValue from "./CardValue";
 

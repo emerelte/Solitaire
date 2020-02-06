@@ -1,6 +1,6 @@
 import React from 'react';
 import './style/Card.css';
-import Card from './components/Card.js'
+import Card from './components/Presentional/Card.js'
 import {DragSource} from "react-dnd";
 import PropTypes from 'prop-types';
 import {areCardsInRightOrder, showCard} from './HelperFunctions'

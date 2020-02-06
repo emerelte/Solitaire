@@ -1,6 +1,6 @@
 import React from 'react';
-import '../style/CardColor.css';
-import {decodeHtml} from '../HelperFunctions'
+import '../../style/CardColor.css';
+import {decodeHtml} from '../../HelperFunctions'
 
 export default class CardColor extends React.Component {
 
