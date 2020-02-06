@@ -1,21 +1,28 @@
 import React from 'react';
 import './style/CardSide.css';
 import Card from "./components/Presentional/Card.js";
+import {connect} from "react-redux";
+import restOfCardDeck from "./reducers/restOfCardDeck";
 
-export default class CardDeck extends React.Component {
+// const mapStateToProps = (state) => ({
+//     restOfCardDeck: state.restOfCardDeck
+// });
 
-    render = () => {
-        return (
-            <div className={"card-deck " + this.props.className}>
-                {/*{*/}
-                {/*    this.props.cards.map((card, index) => (*/}
-                {/*        <div key={card['id']} style={{zIndex: index + 1}}*/}
-                {/*             className={"card-in-deck-box"}>*/}
-                {/*            <Card card={card}/>*/}
-                {/*        </div>*/}
-                {/*    ))*/}
-                {/*}*/}
-            </div>
-        )
-    };
-}
+export const CardDeck = ({cards, className}) => {
+    return (
+        <div className={"card-deck " + className}>
+            {
+                cards.map((card, index) => (
+                    <div key={card['id']} style={{zIndex: index + 1}}
+                         className={"card-in-deck-box"}>
+                        <Card card={card}/>
+                    </div>
+                ))
+            }
+        </div>
+    )
+};
+
+// export default connect(
+//     mapStateToProps,
+// )(CardDeck)

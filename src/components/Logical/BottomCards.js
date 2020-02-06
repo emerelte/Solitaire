@@ -1,16 +1,17 @@
 import React from "react";
 import Target from "../../Target";
-import CardDeck from "../../CardDeck";
+import {CardDeck} from "../../CardDeck";
 import '../../style/BottomCards.css'
 import '../../style/CardDeck.css'
 import {idOfEmptyTarget} from "../../Constants";
 import {connect} from "react-redux";
 
 const mapStateToProps = (state) => ({
-    bottomCards: state.bottomCards
+    bottomCards: state.bottomCards,
+    restOfCardDeck: state.restOfCardDeck
 });
 
-const bottomCards = ({bottomCards}) => {
+const bottomCards = ({bottomCards, restOfCardDeck}) => {
     return (
         <div className="bottom-cards">
             {
@@ -29,8 +30,8 @@ const bottomCards = ({bottomCards}) => {
                         }
                     </div>))
             }
-            {/*<div onClick={this.props.gameManager.dealNextCards}>*/}
-            {/*    <CardDeck className={"rest-of-cards"} cards={this.restOfCardDeck}/></div>*/}
+            <div>
+                <CardDeck cards={restOfCardDeck} className={"rest-of-cards"}/></div>
         </div>)
 };
 

@@ -1,9 +1,9 @@
 import React from 'react';
-import './style/Card.css';
-import Card from './components/Presentional/Card.js'
+import '../../style/Card.css';
+import Card from '../../components/Presentional/Card.js'
 import {DragSource} from "react-dnd";
 import PropTypes from 'prop-types';
-import {areCardsInRightOrder, showCard} from './HelperFunctions'
+import {areCardsInRightOrder, showCard} from '../../HelperFunctions'
 
 const itemSource = {
     beginDrag(props) {

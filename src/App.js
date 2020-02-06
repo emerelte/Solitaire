@@ -195,6 +195,7 @@ class App extends React.Component {
         return (
             // !this.state.hasGameStarted ? <GameStatusForm notify={this.initializeGame}/> :
                 <div className="card-game-table">
+                    <CardColumns/>
                     <div className="bottom-row" style={{position: "relative", bottom: "20px"}}>
                         <TimeAndCounterIndicator/>
                         <BottomCards/>
