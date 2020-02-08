@@ -2,21 +2,10 @@ import React from 'react';
 import HTML5Backend from 'react-dnd-html5-backend'
 import './style/App.css';
 import './style/CardDeck.css';
-import GameStatusForm from "./GameStatusForm"
 import {DragDropContext} from 'react-dnd'
-import {
-    createShuffledCardDeck,
-    isKing,
-    mapGameLevelToGameSetup,
-    showCard,
-    isPossibleToMoveCardBetweenColumns, isRightCardToPlaceInTarget
-} from "./HelperFunctions"
 import CardColumns from "./components/logical/TableauPiles";
-import {idOfEmptyTarget, idOfTargetOfEmptyColumn} from "./Constants.js";
-import BottomCards from "./components/logical/Foundations";
+import Foundations from "./components/logical/Foundations";
 import TimeAndCounterIndicator from "./components/logical/TimeAndCounterIndicator";
-import { initGame } from './actions'
-import CardValue from "./components/presentional/CardValue";
 import MyButton from "./components/MyButton";
 
 class App extends React.Component {
@@ -197,7 +186,7 @@ class App extends React.Component {
                     <CardColumns/>
                     <div className="bottom-row" style={{position: "relative", bottom: "20px"}}>
                         <TimeAndCounterIndicator/>
-                        <BottomCards/>
+                        <Foundations/>
                     </div>
                     <MyButton/>
                 </div>

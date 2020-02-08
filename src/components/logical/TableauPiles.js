@@ -52,13 +52,13 @@ TableauPiles.propTypes = {
             id: PropTypes.number.isRequired,
             value: PropTypes.number.isRequired
         }))),
-    tableauTargets: PropTypes.arrayOf(PropTypes.arrayOf(
+    tableauTargets: PropTypes.arrayOf(
         PropTypes.shape({
             color: PropTypes.string.isRequired,
             hidden: PropTypes.bool.isRequired,
             id: PropTypes.number.isRequired,
             value: PropTypes.number.isRequired
-        })))
+        }))
 };
 
 export default connect(
