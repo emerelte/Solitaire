@@ -1,9 +1,9 @@
 import React from "react";
+import {connect} from "react-redux";
 import '../../style/TimeAndCounterIndicator.css';
 import {formatReadableTimeFromMiliseconds} from "../../HelperFunctions";
-import {connect} from "react-redux";
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = (state) => ({
     begTime: state.counter.begTime,
     curTime: state.counter.curTime,
     movesDone: state.counter.movesDone

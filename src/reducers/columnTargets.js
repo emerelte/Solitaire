@@ -1,8 +1,6 @@
 import {idOfEmptyTarget} from "../Constants";
 import {mapGameLevelToGameSetup} from "../HelperFunctions";
 
-let id = 0;
-
 const columnTargets = (state = [], action) => {
     switch (action.type) {
         case 'INIT_GAME':

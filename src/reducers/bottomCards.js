@@ -1,5 +1,3 @@
-let id = 0;
-
 const bottomCards = (state = [], action) => {
     switch (action.type) {
         case 'INIT_GAME':

@@ -1,10 +1,11 @@
 import React from "react";
+import {connect} from "react-redux";
+
 import Target from "../../Target";
-import {CardDeck} from "../../CardDeck";
+import {CardDeck} from "../presentional/CardDeck";
 import '../../style/BottomCards.css'
 import '../../style/CardDeck.css'
 import {idOfEmptyTarget} from "../../Constants";
-import {connect} from "react-redux";
 
 const mapStateToProps = (state) => ({
     bottomCards: state.bottomCards,

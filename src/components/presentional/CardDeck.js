@@ -1,12 +1,6 @@
 import React from 'react';
-import './style/CardSide.css';
-import Card from "./components/Presentional/Card.js";
-import {connect} from "react-redux";
-import restOfCardDeck from "./reducers/restOfCardDeck";
-
-// const mapStateToProps = (state) => ({
-//     restOfCardDeck: state.restOfCardDeck
-// });
+import '../../style/CardSide.css';
+import Card from "../presentional/Card.js";
 
 export const CardDeck = ({cards, className}) => {
     return (
@@ -22,7 +16,3 @@ export const CardDeck = ({cards, className}) => {
         </div>
     )
 };
-
-// export default connect(
-//     mapStateToProps,
-// )(CardDeck)

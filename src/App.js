@@ -11,13 +11,12 @@ import {
     showCard,
     isPossibleToMoveCardBetweenColumns, isRightCardToPlaceInTarget
 } from "./HelperFunctions"
-import CardColumns from "./components/Presentional/CardColumns";
+import CardColumns from "./components/logical/CardColumns";
 import {idOfEmptyTarget, idOfTargetOfEmptyColumn} from "./Constants.js";
-import BottomCards from "./components/Logical/BottomCards";
-import TimeAndCounterIndicator from "./components/Logical/TimeAndCounterIndicator";
+import BottomCards from "./components/logical/BottomCards";
+import TimeAndCounterIndicator from "./components/logical/TimeAndCounterIndicator";
 import { initGame } from './actions'
-import CardValue from "./components/Presentional/CardValue";
-import VisibleCardColumns from "./components/VisibleCardColumns";
+import CardValue from "./components/presentional/CardValue";
 import MyButton from "./components/MyButton";
 
 class App extends React.Component {
