@@ -11,9 +11,9 @@ import {
     showCard,
     isPossibleToMoveCardBetweenColumns, isRightCardToPlaceInTarget
 } from "./HelperFunctions"
-import CardColumns from "./components/logical/CardColumns";
+import CardColumns from "./components/logical/TableauPiles";
 import {idOfEmptyTarget, idOfTargetOfEmptyColumn} from "./Constants.js";
-import BottomCards from "./components/logical/BottomCards";
+import BottomCards from "./components/logical/Foundations";
 import TimeAndCounterIndicator from "./components/logical/TimeAndCounterIndicator";
 import { initGame } from './actions'
 import CardValue from "./components/presentional/CardValue";

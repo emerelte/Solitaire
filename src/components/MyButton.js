@@ -8,7 +8,7 @@ const MyButton = ({ dispatch }) => {
     return (<Button color="primary" onClick={e => {
         const gameLevel = 1;
         const dealedCards = initializeGame(gameLevel);
-        dispatch(initGame(gameLevel, dealedCards.colOfCards, dealedCards.restOfCards))
+        dispatch(initGame(gameLevel, dealedCards.tableauPiles, dealedCards.stock))
     }}>Start game</Button>)
 };
 

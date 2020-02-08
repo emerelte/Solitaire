@@ -1,16 +1,12 @@
 import { combineReducers } from 'redux'
-import columnsOfCards from "./columnsOfCards";
-import bottomCards from "./bottomCards";
-import restOfCardDeck from "./restOfCardDeck";
 import counter from "./counter";
-import columnTargets from "./columnTargets";
+import tableauTargets from "./tableauTargets";
 import gameMode from "./gameMode";
+import cardsOnTheTable from "./cardsOnTheTable";
 
 export default combineReducers({
-    columnsOfCards,
-    bottomCards,
-    restOfCardDeck,
+    cardsOnTheTable,
     counter,
-    columnTargets,
+    tableauTargets,
     gameMode
 })

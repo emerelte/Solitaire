@@ -129,16 +129,16 @@ export const initializeGame = (p_gameLevel) => {
     const gameMode = mapGameLevelToGameSetup(p_gameLevel);
     let cardDeck = createShuffledCardDeck(gameMode.nrOfSuites);
     let cardsPlacedInColumns = cardDeck.slice(0, gameMode.nrOfCols * gameMode.nrOfCardsInColumn);
-    let restOfCards = cardDeck.slice(gameMode.nrOfCols * gameMode.nrOfCardsInColumn, cardDeck.length);
-    let colOfCards = [];
+    let stock = cardDeck.slice(gameMode.nrOfCols * gameMode.nrOfCardsInColumn, cardDeck.length);
+    let tableauPiles = [];
     for (let i = 0; i < gameMode.nrOfCols; ++i) {
         let cardsInColumn = cardsPlacedInColumns.slice(i * gameMode.nrOfCardsInColumn, (i + 1) * gameMode.nrOfCardsInColumn);
         showCard(cardsInColumn[cardsInColumn.length - 1]);
-        colOfCards.push(cardsInColumn);
+        tableauPiles.push(cardsInColumn);
     }
-    console.log(colOfCards);
+    console.log(tableauPiles);
     return {
-        colOfCards: colOfCards,
-        restOfCards: restOfCards
+        tableauPiles: tableauPiles,
+        stock: stock
     }
 };

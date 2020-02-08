@@ -13,13 +13,13 @@ import {calculateTopPositionOfColumnTarget} from "../../HelperFunctions";
 import Target from "../../Target";
 
 const mapStateToProps = (state) => ({
-    columnsOfCards: state.columnsOfCards,
-    columnTargets: state.columnTargets
+    tableauPiles: state.cardsOnTheTable.tableauPiles,
+    tableauTargets: state.tableauTargets
 });
 
-const CardColumns = ({columnsOfCards, columnTargets}) => (
+const TableauPiles = ({tableauPiles, tableauTargets}) => (
     <div className="row-with-card-columns">
-        {columnsOfCards.map((column, colInd) => (
+        {tableauPiles.map((column, colInd) => (
             <div key={colInd} style={{position: "relative", height: "0px"}}
                  className={"solitaire-column"}>
         <CardStack
@@ -27,7 +27,7 @@ const CardColumns = ({columnsOfCards, columnTargets}) => (
             createTargets={() => {}}
             cardsInColumn={column}/>
         {
-            columnTargets[colInd]['id'] !== idOfEmptyTarget ?
+            tableauTargets[colInd]['id'] !== idOfEmptyTarget ?
                 <div className={"card-box"}
                      style={{
                          position: "relative",
@@ -44,15 +44,15 @@ const CardColumns = ({columnsOfCards, columnTargets}) => (
     </div>
 );
 
-CardColumns.propTypes = {
-    columnsOfCards: PropTypes.arrayOf(PropTypes.arrayOf(
+TableauPiles.propTypes = {
+    tableauPiles: PropTypes.arrayOf(PropTypes.arrayOf(
         PropTypes.shape({
             color: PropTypes.string.isRequired,
             hidden: PropTypes.bool.isRequired,
             id: PropTypes.number.isRequired,
             value: PropTypes.number.isRequired
-        }))).isRequired,
-    bottomCards: PropTypes.arrayOf(PropTypes.arrayOf(
+        }))),
+    tableauTargets: PropTypes.arrayOf(PropTypes.arrayOf(
         PropTypes.shape({
             color: PropTypes.string.isRequired,
             hidden: PropTypes.bool.isRequired,
@@ -63,4 +63,4 @@ CardColumns.propTypes = {
 
 export default connect(
     mapStateToProps
-)(CardColumns)
+)(TableauPiles)

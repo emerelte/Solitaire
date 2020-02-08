@@ -8,20 +8,20 @@ import '../../style/CardDeck.css'
 import {idOfEmptyTarget} from "../../Constants";
 
 const mapStateToProps = (state) => ({
-    bottomCards: state.bottomCards,
-    restOfCardDeck: state.restOfCardDeck
+    foundations: state.cardsOnTheTable.foundations,
+    stock: state.cardsOnTheTable.stock
 });
 
-const bottomCards = ({bottomCards, restOfCardDeck}) => {
+const foundations = ({foundations, stock}) => {
     return (
         <div className="bottom-cards">
             {
-                bottomCards.map((cardList, index) => (
+                foundations.map((cardList, index) => (
                     <div key={index} className={"card-box"}>
                         <CardDeck
                             cards={cardList}/>
                         {
-                            bottomCards[index]['id'] !== idOfEmptyTarget ?
+                            foundations[index]['id'] !== idOfEmptyTarget ?
                                 <div className={"target-box"} key={index}>
                                     <Target
                                         // moveCard={(src, dst) => this.props.gameManager.moveCardToBottomColumn(src, dst)}
@@ -32,10 +32,10 @@ const bottomCards = ({bottomCards, restOfCardDeck}) => {
                     </div>))
             }
             <div>
-                <CardDeck cards={restOfCardDeck} className={"rest-of-cards"}/></div>
+                <CardDeck cards={stock} className={"rest-of-cards"}/></div>
         </div>)
 };
 
 export default connect(
     mapStateToProps
-)(bottomCards)
+)(foundations)

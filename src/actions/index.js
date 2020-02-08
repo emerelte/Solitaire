@@ -1,6 +1,10 @@
-export const initGame = (gameLevel, columnsOfCards, restOfCardDeck) => ({
-    type: 'INIT_GAME',
+export const initGame = (gameLevel, tableauPiles, stock) => ({
+    type: "INIT_GAME",
     gameLevel: gameLevel,
-    columnsOfCards: columnsOfCards,
-    restOfCardDeck: restOfCardDeck
+    tableauPiles: tableauPiles,
+    stock: stock
+});
+
+export const dealNextCards = () => ({
+    type: "DEAL_CARDS"
 });
