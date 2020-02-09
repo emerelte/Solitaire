@@ -14,9 +14,9 @@ export default class Card extends React.Component {
         else
             return <div style={{color: findFontColor(this.props.card)}}
                         className={"card"}>
-                <CardSide value={this.props.card.value} color={this.props.card.color}/>
-                <CardMiddle value={this.props.card.value} color={this.props.card.color}/>
-                <CardSide value={this.props.card.value} color={this.props.card.color}/>
+                <CardSide value={this.props.card.value} shape={this.props.card.shape}/>
+                <CardMiddle value={this.props.card.value} shape={this.props.card.shape}/>
+                <CardSide value={this.props.card.value} shape={this.props.card.shape}/>
             </div>;
     }
 }

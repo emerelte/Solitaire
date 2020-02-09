@@ -15,11 +15,11 @@ export const createTargets = (cardToMove) => ({
 });
 
 export const deleteTargets = () => ({
-    type: "DELETE_TARGETS",
+    type: "DELETE_TARGETS"
 });
 
-export const moveCardToFoundations = (cardToMove, foundationIndex) => ({
-    type: "MOVE_TO_FOUNDATIONS",
+export const moveCardToFoundation = (cardToMove, foundationIndex) => ({
+    type: "MOVE_TO_FOUNDATION",
     cardToMove: cardToMove,
     foundationIndex: foundationIndex
 });

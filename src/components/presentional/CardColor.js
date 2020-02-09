@@ -6,9 +6,8 @@ export default class CardColor extends React.Component {
 
     render = () => {
         return (
-
             <div style={{fontSize: this.props.fontSize}} className={'color-div'}><span className={"color-span"}>
-                {decodeHtml("&" + this.props.color + ";")}
+                {decodeHtml("&" + this.props.shape + ";")}
                              </span>
             </div>
         )

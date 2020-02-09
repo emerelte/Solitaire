@@ -1,6 +1,6 @@
 import {mapGameLevelToGameSetup} from "../HelperFunctions";
 
-const columnTargets = (state = [], action) => {
+const columnTargets = (state = {}, action) => {
     switch (action.type) {
         case 'INIT_GAME':
             return mapGameLevelToGameSetup(action.gameLevel);

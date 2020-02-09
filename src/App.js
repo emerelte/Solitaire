@@ -1,15 +1,15 @@
 import React from 'react';
 import HTML5Backend from 'react-dnd-html5-backend'
 import {DragDropContext} from 'react-dnd'
+import {connect} from "react-redux";
+import CardColumns from "./components/logical/TableauPiles";
+import FoundationsAndStock from "./components/logical/FoundationsAndStock";
+import TimeAndCounterIndicator from "./components/logical/TimeAndCounterIndicator";
+import UndoButton from "./components/logical/UndoButton";
+import GameStatusForm from "./components/logical/GameStatusForm";
+import {initGame} from "./actions";
 import './style/App.css';
 import './style/CardDeck.css';
-import CardColumns from "./components/logical/TableauPiles";
-import Foundations from "./components/logical/Foundations";
-import TimeAndCounterIndicator from "./components/logical/TimeAndCounterIndicator";
-import MyButton from "./components/MyButton";
-import {connect} from "react-redux";
-import GameStatusForm from "./GameStatusForm";
-import {initGame} from "./actions";
 
 const mapStateToProps = (state) => ({
     hasGameStarted: state.hasGameStarted
@@ -33,9 +33,9 @@ const App = ({hasGameStarted, initGame}) => {
                 <CardColumns/>
                 <div className="bottom-row" style={{position: "relative", bottom: "20px"}}>
                     <TimeAndCounterIndicator/>
-                    <Foundations/>
+                    <FoundationsAndStock/>
                 </div>
-                <MyButton/>
+                <UndoButton/>
             </div>
     );
 };

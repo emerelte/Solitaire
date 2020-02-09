@@ -1,28 +1,28 @@
 import {easy, medium, hard} from "./GameSetups";
-import {idOfEmptyTarget, idOfTargetOfEmptyColumn} from "./Constants";
+import {coordsOfNonExistingCard, idOfInvalidTarget, idOfTargetOfEmptyColumn} from "./Constants";
 
 export const findFontColor = (card) => {
-    return card.color === 'spades' || card.color === 'clubs' ? 'black' : 'red';
+    return card.shape === 'spades' || card.shape === 'clubs' ? 'black' : 'red';
 };
 
-export const createCardDeck = (p_nrOfSuites) => {
+const createCardDeck = (nrOfSuites) => {
     let cardDeck = [];
-    let listOfColors = [];
-    if (p_nrOfSuites === 4)
-        listOfColors = ['spades', 'clubs', 'hearts', 'diams'];
-    else if (p_nrOfSuites === 2)
-        listOfColors = ['spades', 'hearts'];
+    let listOfShapes = [];
+    if (nrOfSuites === 4)
+        listOfShapes = ['spades', 'clubs', 'hearts', 'diams'];
+    else if (nrOfSuites === 2)
+        listOfShapes = ['spades', 'hearts'];
     let i = 0;
-    for (const color of listOfColors) {
+    for (const shape of listOfShapes) {
         for (let val = 1; val < 14; ++val) {
-            cardDeck.push({'color': color, 'value': val, 'id': i, 'hidden': true});
-            ++i;
+            cardDeck.push({'shape': shape, 'value': val, 'id': i, 'hidden': true});
+             ++i;
         }
     }
     return cardDeck;
 };
 
-export const shuffleArray = (arr) => {
+const shuffleArray = (arr) => {
     let j, x, i;
     for (i = arr.length - 1; i > 0; i--) {
         j = Math.floor(Math.random() * (i + 1));
@@ -33,20 +33,20 @@ export const shuffleArray = (arr) => {
     return arr;
 };
 
-export const createShuffledCardDeck = (p_nrOfSuites) => {
-    return shuffleArray(createCardDeck(p_nrOfSuites));
+export const createShuffledCardDeck = (nrOfSuites) => {
+    return shuffleArray(createCardDeck(nrOfSuites));
 };
 
 export const showCard = (card) => {
     card.hidden = false;
 };
 
-export const isKing = (p_card) => {
-    return p_card.value === 13;
+const isKing = (card) => {
+    return card.value === 13;
 };
 
-export const isAce = (p_card) => {
-    return p_card.value === 1;
+const isAce = (card) => {
+    return card.value === 1;
 };
 
 export const areCardsInRightOrder = (cards) => {
@@ -60,20 +60,20 @@ export const areCardsInRightOrder = (cards) => {
     return true;
 };
 
-export const isPossibleToMoveCardBetweenColumns = (movingCard, targetCard) => {
+const isPossibleToMoveCardBetweenColumns = (movingCard, targetCard) => {
     return findFontColor(movingCard) !== findFontColor(targetCard) &&
         movingCard.value === targetCard.value - 1;
 };
 
 
-export const mapGameLevelToGameSetup = (p_level) => {
+export const mapGameLevelToGameSetup = (level) => {
     let dict = {0: easy, 1: medium, 2: hard};
-    return dict[p_level];
+    return dict[level];
 };
 
-export const convertValueOfCardToDisplayedSymbol = (p_cardValue) => {
+export const convertValueOfCardToDisplayedSymbol = (cardValue) => {
     const displayedSymbols = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'B', 'Q', 'K'];
-    return displayedSymbols[p_cardValue - 1];
+    return displayedSymbols[cardValue - 1];
 };
 
 export const decodeHtml = (html) => {
@@ -82,52 +82,52 @@ export const decodeHtml = (html) => {
     return txt.value;
 };
 
-const convertMinutesToHours = (p_minutes) => {
-    return p_minutes / 60;
+const convertMinutesToHours = (minutes) => {
+    return minutes / 60;
 };
 
-export const formatReadableTimeFromMiliseconds = (p_timeInMiliseconds) => {
-    let l_formattedTime = "";
-    const l_seconds = p_timeInMiliseconds.getSeconds();
-    const l_minutes = p_timeInMiliseconds.getMinutes();
-    const l_hours = p_timeInMiliseconds.getHours() + convertMinutesToHours(p_timeInMiliseconds.getTimezoneOffset());
+export const formatReadableTimeFromMs = (timeInMiliseconds) => {
+    let formattedTime = "";
+    const seconds = timeInMiliseconds.getSeconds();
+    const minutes = timeInMiliseconds.getMinutes();
+    const hours = timeInMiliseconds.getHours() + convertMinutesToHours(timeInMiliseconds.getTimezoneOffset());
 
-    if (l_hours < 10) {
-        l_formattedTime += "0";
+    if (hours < 10) {
+        formattedTime += "0";
     }
-    l_formattedTime += l_hours + ":";
+    formattedTime += hours + ":";
 
-    if (l_minutes < 10) {
-        l_formattedTime += "0";
+    if (minutes < 10) {
+        formattedTime += "0";
     }
-    l_formattedTime += l_minutes + ":";
+    formattedTime += minutes + ":";
 
-    if (l_seconds < 10) {
-        l_formattedTime += "0";
+    if (seconds < 10) {
+        formattedTime += "0";
     }
-    l_formattedTime += l_seconds;
+    formattedTime += seconds;
 
-    return l_formattedTime;
+    return formattedTime;
 };
 
-export const isRightCardToPlaceInTarget = (p_card, p_lastTargetCard) => {
-    if (p_lastTargetCard === undefined) {
-        if (isAce(p_card))
+const isRightCardToPlaceInTarget = (card, lastTargetCard) => {
+    if (lastTargetCard === undefined) {
+        if (isAce(card))
             return true;
     } else {
-        if (p_card.color === p_lastTargetCard.color
-            && p_card.value === p_lastTargetCard.value + 1)
+        if (card.shape === lastTargetCard.shape
+            && card.value === lastTargetCard.value + 1)
             return true;
     }
     return false;
 };
 
-export const calculateTopPositionOfColumnTarget = (p_columnLength) => {
-    return p_columnLength === 0 ? 0 : (p_columnLength - 1) * (9.4 * 0.15);
+export const calculateTopPositionOfColumnTarget = (columnLength) => {
+    return columnLength === 0 ? 0 : (columnLength - 1) * (9.4 * 0.15);
 };
 
-export const initializeGame = (p_gameLevel) => {
-    const gameMode = mapGameLevelToGameSetup(p_gameLevel);
+export const initializeGame = (gameLevel) => {
+    const gameMode = mapGameLevelToGameSetup(gameLevel);
     let cardDeck = createShuffledCardDeck(gameMode.nrOfSuites);
     let cardsPlacedInColumns = cardDeck.slice(0, gameMode.nrOfCols * gameMode.nrOfCardsInColumn);
     let stock = cardDeck.slice(gameMode.nrOfCols * gameMode.nrOfCardsInColumn, cardDeck.length);
@@ -145,31 +145,31 @@ export const initializeGame = (p_gameLevel) => {
 
 export const createTableauTargets = (card, tableauPiles) => {
     let tableauTargets = [];
-    tableauPiles.forEach((column, index) => {
+    tableauPiles.forEach((column) => {
             if (column.length === 0) {
                 if (isKing(card))
                     tableauTargets.push({'id': idOfTargetOfEmptyColumn});
                 else
-                    tableauTargets.push({'id': idOfEmptyTarget});
+                    tableauTargets.push({'id': idOfInvalidTarget});
             } else if (isPossibleToMoveCardBetweenColumns(card, column[column.length - 1]))
                 tableauTargets.push({'id': column[column.length - 1].id});
             else
-                tableauTargets.push({'id': idOfEmptyTarget});
+                tableauTargets.push({'id': idOfInvalidTarget});
         }
     );
     return tableauTargets;
 };
 
-export const createFoundationsTargets = (card, foundations, prevFoundationsTargets) => {
+export const createFoundationsTargets = (card, foundations) => {
     let foundationsTargets = [];
-    prevFoundationsTargets.forEach((column, index) => {
-        if (isRightCardToPlaceInTarget(card, foundations[index][foundations[index].length - 1])) {
-            foundationsTargets.push({'id': index});
+    for (let i = 0; i < foundations.length; ++i) {
+        if (isRightCardToPlaceInTarget(card, foundations[i][foundations[i].length - 1])) {
+            foundationsTargets.push({'id': i});
         } else {
-            foundationsTargets.push({'id': idOfEmptyTarget})
+            foundationsTargets.push({'id': idOfInvalidTarget})
         }
-    });
-    return foundationsTargets
+    }
+    return foundationsTargets;
 };
 
 const getCardAt = (tableauPiles, colIdx, rowIdx) => {
@@ -181,7 +181,7 @@ const getCardCoords = (tableauPiles, card) => {
         if (tableauPiles[i].indexOf(card) !== -1)
             return {"column": i, "row": tableauPiles[i].indexOf(card)};
     }
-    return {"column": -1, "row": -1};
+    return coordsOfNonExistingCard;
 };
 
 export const getListOfBoundCards = (card, tableauPiles) => {
@@ -195,12 +195,3 @@ export const getListOfBoundCards = (card, tableauPiles) => {
     }
     return boundCards;
 };
-
-// export const moveCardsToDestColumn = (startingCard, destCol) => {
-//     let cardsToMove = this.getListOfBoundCards(startingCard);
-//     for (let i = 0; i < cardsToMove.length; ++i) {
-//         this.moveCardToColumn(cardsToMove[i], destCol);
-//     }
-//     this.deleteTargets();
-//     this.incrementMovesCounter();
-// };

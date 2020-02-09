@@ -1,10 +1,10 @@
 import React from "react";
-import "./style/GameStatusForm.css";
+import PropTypes from "prop-types";
 import Typography from "@material-ui/core/Typography";
 import Slider from "@material-ui/core/Slider";
 import Button from "@material-ui/core/Button";
-import PropTypes from "prop-types";
-import {initializeGame} from "./HelperFunctions";
+import {initializeGame} from "../../HelperFunctions";
+import "../../style/GameStatusForm.css";
 
 const marks = [
     {
@@ -46,7 +46,7 @@ export default class GameStatusForm extends React.Component {
                     width: "10%",
                     left: "45%"
                 }}
-                onChange={ (e, val) => this.gameLevel = val }
+                onChange={(e, val) => this.gameLevel = val}
                 defaultValue={1}
                 aria-labelledby="discrete-slider"
                 step={1}

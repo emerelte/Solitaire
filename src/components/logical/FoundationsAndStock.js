@@ -1,12 +1,12 @@
 import React from "react";
 import {connect} from "react-redux";
-
-import Target from "../../Target";
+import PropTypes, {arrayOf} from "prop-types";
+import Target from "./Target";
 import {CardDeck} from "../presentional/CardDeck";
+import {CardType, idOfInvalidTarget} from "../../Constants";
+import {dealNextCards, moveCardToFoundation} from "../../actions";
 import '../../style/BottomCards.css'
 import '../../style/CardDeck.css'
-import {idOfEmptyTarget} from "../../Constants";
-import {dealNextCards, moveCardToFoundations} from "../../actions";
 
 const mapStateToProps = (state) => ({
     foundations: state.cardsOnTheTable.foundations,
@@ -16,10 +16,10 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     dealNextCards: () => dispatch(dealNextCards()),
-    moveCardToFoundations: (src, dst) => dispatch(moveCardToFoundations(src, dst))
+    moveCardToFoundations: (src, dst) => dispatch(moveCardToFoundation(src, dst))
 });
 
-const Foundations = ({foundations, stock, foundationsTargets, dealNextCards, moveCardToFoundations}) => {
+const FoundationsAndStock = ({foundations, stock, foundationsTargets, dealNextCards, moveCardToFoundations}) => {
     return (
         <div className="bottom-cards">
             {
@@ -28,7 +28,7 @@ const Foundations = ({foundations, stock, foundationsTargets, dealNextCards, mov
                         <CardDeck
                             cards={cardList}/>
                         {
-                            foundationsTargets[index]['id'] !== idOfEmptyTarget ?
+                            foundationsTargets[index]['id'] !== idOfInvalidTarget ?
                                 <div className={"target-box"} key={index}>
                                     <Target
                                         moveCard={(src, dst) => moveCardToFoundations(src, dst)}
@@ -42,7 +42,15 @@ const Foundations = ({foundations, stock, foundationsTargets, dealNextCards, mov
         </div>)
 };
 
+FoundationsAndStock.propTypes = {
+    foundations: PropTypes.arrayOf(PropTypes.arrayOf(arrayOf(CardType))).isRequired,
+    stock: PropTypes.arrayOf(CardType).isRequired,
+    foundationsTargets: PropTypes.arrayOf(CardType),
+    dealNextCards: PropTypes.func.isRequired,
+    moveCardToFoundations: PropTypes.func.isRequired
+};
+
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(Foundations)
+)(FoundationsAndStock)

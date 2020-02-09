@@ -1,14 +1,15 @@
 import React from 'react';
 import {DragSource} from "react-dnd";
 import PropTypes from 'prop-types';
-import '../../style/Card.css';
 import Card from '../presentional/Card.js'
 import {areCardsInRightOrder, showCard} from '../../HelperFunctions'
+import '../../style/Card.css';
+import {CardType} from "../../Constants";
 
 const itemSource = {
     beginDrag(props) {
-        props.createTargets(props.cardsInColumn[0]);
-        return props.cardsInColumn[0];
+        props.createTargets(props.cardsInStack[0]);
+        return props.cardsInStack[0];
     },
     endDrag(props) {
         props.deleteTargets();
@@ -27,11 +28,16 @@ class CardStack extends React.Component {
 
     static propTypes = {
         createTargets: PropTypes.func.isRequired,
-        deleteTargets: PropTypes.func.isRequired
+        deleteTargets: PropTypes.func.isRequired,
+        cardsInStack: PropTypes.arrayOf(CardType).isRequired
     };
 
     isEmptyStack() {
-        return this.props.cardsInColumn.length === 0;
+        return this.props.cardsInStack.length === 0;
+    }
+
+    isStackOfOneCard() {
+        return this.props.cardsInStack.length === 1;
     }
 
     render = () => {
@@ -41,39 +47,37 @@ class CardStack extends React.Component {
             return <div style={{display: "none"}}/>;
         }
 
-        let bottomCard = this.props.cardsInColumn[0];
-        if (this.isLastCardInStack())
+        let bottomCard = this.props.cardsInStack[0];
+
+        if (this.isStackOfOneCard())
             showCard(bottomCard);
+
         if (bottomCard.hidden)
             return <div style={{position: "absolute", top: "15%"}}>
                 <Card card={bottomCard}/>
                 <DragItemContainer deleteTargets={() => this.props.deleteTargets()}
                                    createTargets={this.props.createTargets}
-                                   cardsInColumn={this.props.cardsInColumn.slice(1, this.props.cardsInColumn.length)}/>
+                                   cardsInStack={this.props.cardsInStack.slice(1, this.props.cardsInStack.length)}/>
             </div>;
         else {
-            if (areCardsInRightOrder(this.props.cardsInColumn))
+            if (areCardsInRightOrder(this.props.cardsInStack))
                 return connectDragSource(
                     <div className={"draggable"} style={{position: "absolute", top: "15%"}}>
                         <Card card={bottomCard}/>
                         <DragItemContainer deleteTargets={() => this.props.deleteTargets()}
                                            createTargets={this.props.createTargets}
-                                           cardsInColumn={this.props.cardsInColumn.slice(1, this.props.cardsInColumn.length)}/>
+                                           cardsInStack={this.props.cardsInStack.slice(1, this.props.cardsInStack.length)}/>
                     </div>);
             else {
                 return <div style={{position: "absolute", top: "15%"}}>
                     <Card card={bottomCard}/>
                     <DragItemContainer deleteTargets={() => this.props.deleteTargets()}
                                        createTargets={this.props.createTargets}
-                                       cardsInColumn={this.props.cardsInColumn.slice(1, this.props.cardsInColumn.length)}/>
+                                       cardsInStack={this.props.cardsInStack.slice(1, this.props.cardsInStack.length)}/>
                 </div>
             }
         }
     };
-
-    isLastCardInStack() {
-        return this.props.cardsInColumn.length === 1;
-    }
 }
 
 export default DragSource('item', itemSource, collect)(CardStack)

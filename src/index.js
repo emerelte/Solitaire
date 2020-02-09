@@ -1,17 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './style/index.css';
-import App from './App';
 import * as serviceWorker from './serviceWorker';
 import {Provider} from 'react-redux'
 import {createStore} from 'redux'
 import rootReducer from './reducers'
+import App from './App';
 
 const store = createStore(rootReducer);
 
 setInterval(function () {
     console.log(store.getState());
-}.bind(this), 3000);
+}, 3000);
 
 ReactDOM.render(
     <Provider store={store}>

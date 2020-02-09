@@ -1,7 +1,8 @@
 import React from "react";
 import {connect} from "react-redux";
+import PropTypes from "prop-types";
+import {formatReadableTimeFromMs} from "../../HelperFunctions";
 import '../../style/TimeAndCounterIndicator.css';
-import {formatReadableTimeFromMiliseconds} from "../../HelperFunctions";
 
 const mapStateToProps = (state) => ({
     begTime: state.counter.begTime,
@@ -22,10 +23,16 @@ const TimeAndCounterIndicator = ({begTime, curTime, movesDone}) => {
         <div className={"indicator-positioner"}>
             <div className={"indicator"}>
                 <div>{"Moves: " + movesDone}</div>
-                <div>{"Time: " + formatReadableTimeFromMiliseconds(passedTime)}</div>
+                <div>{"Time: " + formatReadableTimeFromMs(passedTime)}</div>
             </div>
         </div>
     );
+};
+
+TimeAndCounterIndicator.propTypes = {
+    begTime: PropTypes.number.isRequired,
+    curTime: PropTypes.number.isRequired,
+    movesDone: PropTypes.number.isRequired,
 };
 
 export default connect(

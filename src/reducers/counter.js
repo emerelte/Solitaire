@@ -1,7 +1,6 @@
 let movesDone = 0;
 
 const counter = (state = [], action) => {
-    console.log(action);
     switch (action.type) {
         case 'INIT_GAME':
             return {
@@ -9,10 +8,13 @@ const counter = (state = [], action) => {
                 begTime: 1,//todo implementation
                 curTime: 1
             };
-        case 'MOVE_DONE':
-            return state; //todo implementation
-        case 'UPDATE_TIME':
-            return state; // todo implementation
+        case 'MOVE_TO_FOUNDATION':
+        case 'MOVE_BETWEEN_PILES':
+            ++movesDone;
+            return {
+                ...state,
+                movesDone: movesDone
+            };
         default:
             return state
     }

@@ -3,15 +3,15 @@ import '../../style/CardMiddle.css';
 import CardColor from "./CardColor";
 import jackClubs from "../../images/jackClubs.png"
 import jackHearts from "../../images/jackHearts.png"
-import jackDiams from "../../images/jackDiams.png"
+import jackDiamonds from "../../images/jackDiams.png"
 import jackSpades from "../../images/jackSpades.png"
 import queenClubs from "../../images/queenClubs.png"
 import queenHearts from "../../images/queenHearts.png"
-import queenDiams from "../../images/queenDiams.png"
+import queenDiamonds from "../../images/queenDiams.png"
 import queenSpades from "../../images/queenSpades.png"
 import kingClubs from "../../images/kingClubs.png"
 import kingHearts from "../../images/kingHearts.png"
-import kingDiams from "../../images/kingDiams.png"
+import kingDiamonds from "../../images/kingDiams.png"
 import kingSpades from "../../images/kingSpades.png"
 
 
@@ -21,25 +21,25 @@ export default class CardMiddle extends React.Component {
             case 1:
                 return (
                     <div className={"card-middle-column"}>
-                        <div className={"div-middle"} style={{fontSize: '5vw'}}><CardColor color={this.props.color}/>
+                        <div className={"div-middle"} style={{fontSize: '5vw'}}><CardColor shape={this.props.shape}/>
                         </div>
                     </div>
                 );
             case 2:
                 return (
                     <div className={"card-middle-column"}>
-                        <div className={"div-two"}><CardColor color={this.props.color}/></div>
-                        <div className={"div-two"}><CardColor color={this.props.color}/></div>
+                        <div className={"div-two"}><CardColor shape={this.props.shape}/></div>
+                        <div className={"div-two"}><CardColor shape={this.props.shape}/></div>
                     </div>
                 );
             case 3:
                 return (
                     <div className={"card-middle-column"}>
-                        <div className={"div-three"}><CardColor color={this.props.color}/>
+                        <div className={"div-three"}><CardColor shape={this.props.shape}/>
                         </div>
-                        <div className={"div-three"}><CardColor color={this.props.color}/>
+                        <div className={"div-three"}><CardColor shape={this.props.shape}/>
                         </div>
-                        <div className={"div-three"}><CardColor color={this.props.color}/>
+                        <div className={"div-three"}><CardColor shape={this.props.shape}/>
                         </div>
                     </div>
                 );
@@ -48,18 +48,18 @@ export default class CardMiddle extends React.Component {
                     <div className={"card-middle-column"}>
                         <div className={"div-four-outer"}>
                             <div className={"div-four-inner"}>
-                                <CardColor color={this.props.color}/>
+                                <CardColor shape={this.props.shape}/>
                             </div>
                             <div className={"div-four-inner"}>
-                                <CardColor color={this.props.color}/>
+                                <CardColor shape={this.props.shape}/>
                             </div>
                         </div>
                         <div className={"div-four-outer"}>
                             <div className={"div-four-inner"}>
-                                <CardColor color={this.props.color}/>
+                                <CardColor shape={this.props.shape}/>
                             </div>
                             <div className={"div-four-inner"}>
-                                <CardColor color={this.props.color}/>
+                                <CardColor shape={this.props.shape}/>
                             </div>
                         </div>
                     </div>
@@ -69,23 +69,23 @@ export default class CardMiddle extends React.Component {
                     <div className={"card-middle-column"}>
                         <div className={"div-five-outer"}>
                             <div className={"div-five-inner"}>
-                                <CardColor color={this.props.color}/>
+                                <CardColor shape={this.props.shape}/>
                             </div>
                             <div className={"div-five-inner"}>
-                                <CardColor color={this.props.color}/>
-                            </div>
-                        </div>
-                        <div className={"div-five-outer"}>
-                            <div className={"div-five-inner"}>
-                                <CardColor color={this.props.color}/>
+                                <CardColor shape={this.props.shape}/>
                             </div>
                         </div>
                         <div className={"div-five-outer"}>
                             <div className={"div-five-inner"}>
-                                <CardColor color={this.props.color}/>
+                                <CardColor shape={this.props.shape}/>
+                            </div>
+                        </div>
+                        <div className={"div-five-outer"}>
+                            <div className={"div-five-inner"}>
+                                <CardColor shape={this.props.shape}/>
                             </div>
                             <div className={"div-five-inner"}>
-                                <CardColor color={this.props.color}/>
+                                <CardColor shape={this.props.shape}/>
                             </div>
                         </div>
                     </div>
@@ -95,26 +95,26 @@ export default class CardMiddle extends React.Component {
                     <div className={"card-middle-column"}>
                         <div className={"div-six-outer"}>
                             <div className={"div-six-inner"}>
-                                <CardColor color={this.props.color}/>
+                                <CardColor shape={this.props.shape}/>
                             </div>
                             <div className={"div-six-inner"}>
-                                <CardColor color={this.props.color}/>
-                            </div>
-                        </div>
-                        <div className={"div-six-outer"}>
-                            <div className={"div-six-inner"}>
-                                <CardColor color={this.props.color}/>
-                            </div>
-                            <div className={"div-six-inner"}>
-                                <CardColor color={this.props.color}/>
+                                <CardColor shape={this.props.shape}/>
                             </div>
                         </div>
                         <div className={"div-six-outer"}>
                             <div className={"div-six-inner"}>
-                                <CardColor color={this.props.color}/>
+                                <CardColor shape={this.props.shape}/>
                             </div>
                             <div className={"div-six-inner"}>
-                                <CardColor color={this.props.color}/>
+                                <CardColor shape={this.props.shape}/>
+                            </div>
+                        </div>
+                        <div className={"div-six-outer"}>
+                            <div className={"div-six-inner"}>
+                                <CardColor shape={this.props.shape}/>
+                            </div>
+                            <div className={"div-six-inner"}>
+                                <CardColor shape={this.props.shape}/>
                             </div>
                         </div>
                     </div>
@@ -124,29 +124,29 @@ export default class CardMiddle extends React.Component {
                     <div className={"card-middle-row"}>
                         <div className={"div-seven-outer"}>
                             <div className={"div-seven-inner"}>
-                                <CardColor color={this.props.color}/>
+                                <CardColor shape={this.props.shape}/>
                             </div>
                             <div className={"div-seven-inner"}>
-                                <CardColor color={this.props.color}/>
+                                <CardColor shape={this.props.shape}/>
                             </div>
                             <div className={"div-seven-inner"}>
-                                <CardColor color={this.props.color}/>
+                                <CardColor shape={this.props.shape}/>
                             </div>
                         </div>
                         <div className={"div-seven-outer"}>
                             <div className={"div-seven-inner down-shifted"}>
-                                <CardColor color={this.props.color}/>
+                                <CardColor shape={this.props.shape}/>
                             </div>
                         </div>
                         <div className={"div-seven-outer"}>
                             <div className={"div-seven-inner"}>
-                                <CardColor color={this.props.color}/>
+                                <CardColor shape={this.props.shape}/>
                             </div>
                             <div className={"div-seven-inner"}>
-                                <CardColor color={this.props.color}/>
+                                <CardColor shape={this.props.shape}/>
                             </div>
                             <div className={"div-seven-inner"}>
-                                <CardColor color={this.props.color}/>
+                                <CardColor shape={this.props.shape}/>
                             </div>
                         </div>
                     </div>
@@ -156,32 +156,32 @@ export default class CardMiddle extends React.Component {
                     <div className={"card-middle-row"}>
                         <div className={"div-eight-outer"}>
                             <div className={"div-eight-inner"}>
-                                <CardColor color={this.props.color}/>
+                                <CardColor shape={this.props.shape}/>
                             </div>
                             <div className={"div-eight-inner"}>
-                                <CardColor color={this.props.color}/>
+                                <CardColor shape={this.props.shape}/>
                             </div>
                             <div className={"div-eight-inner"}>
-                                <CardColor color={this.props.color}/>
+                                <CardColor shape={this.props.shape}/>
                             </div>
                         </div>
                         <div className={"div-eight-outer"}>
                             <div className={"div-eight-inner down-shifted"}>
-                                <CardColor color={this.props.color}/>
+                                <CardColor shape={this.props.shape}/>
                             </div>
                             <div className={"div-eight-inner up-shifted"}>
-                                <CardColor color={this.props.color}/>
+                                <CardColor shape={this.props.shape}/>
                             </div>
                         </div>
                         <div className={"div-eight-outer"}>
                             <div className={"div-eight-inner"}>
-                                <CardColor color={this.props.color}/>
+                                <CardColor shape={this.props.shape}/>
                             </div>
                             <div className={"div-eight-inner"}>
-                                <CardColor color={this.props.color}/>
+                                <CardColor shape={this.props.shape}/>
                             </div>
                             <div className={"div-eight-inner"}>
-                                <CardColor color={this.props.color}/>
+                                <CardColor shape={this.props.shape}/>
                             </div>
                         </div>
                     </div>
@@ -191,35 +191,35 @@ export default class CardMiddle extends React.Component {
                     <div className={"card-middle-row"}>
                         <div className={"div-nine-outer"}>
                             <div className={"div-nine-inner"}>
-                                <CardColor color={this.props.color}/>
+                                <CardColor shape={this.props.shape}/>
                             </div>
                             <div className={"div-nine-inner"}>
-                                <CardColor color={this.props.color}/>
+                                <CardColor shape={this.props.shape}/>
                             </div>
                             <div className={"div-nine-inner"}>
-                                <CardColor color={this.props.color}/>
+                                <CardColor shape={this.props.shape}/>
                             </div>
                             <div className={"div-nine-inner"}>
-                                <CardColor color={this.props.color}/>
+                                <CardColor shape={this.props.shape}/>
                             </div>
                         </div>
                         <div className={"div-nine-outer"}>
                             <div className={"div-nine-inner down-shifted"}>
-                                <CardColor color={this.props.color}/>
+                                <CardColor shape={this.props.shape}/>
                             </div>
                         </div>
                         <div className={"div-nine-outer"}>
                             <div className={"div-nine-inner"}>
-                                <CardColor color={this.props.color}/>
+                                <CardColor shape={this.props.shape}/>
                             </div>
                             <div className={"div-nine-inner"}>
-                                <CardColor color={this.props.color}/>
+                                <CardColor shape={this.props.shape}/>
                             </div>
                             <div className={"div-nine-inner"}>
-                                <CardColor color={this.props.color}/>
+                                <CardColor shape={this.props.shape}/>
                             </div>
                             <div className={"div-nine-inner"}>
-                                <CardColor color={this.props.color}/>
+                                <CardColor shape={this.props.shape}/>
                             </div>
                         </div>
                     </div>
@@ -229,44 +229,44 @@ export default class CardMiddle extends React.Component {
                     <div className={"card-middle-row"}>
                         <div className={"div-ten-outer"}>
                             <div className={"div-ten-inner"}>
-                                <CardColor color={this.props.color}/>
+                                <CardColor shape={this.props.shape}/>
                             </div>
                             <div className={"div-ten-inner"}>
-                                <CardColor color={this.props.color}/>
+                                <CardColor shape={this.props.shape}/>
                             </div>
                             <div className={"div-ten-inner"}>
-                                <CardColor color={this.props.color}/>
+                                <CardColor shape={this.props.shape}/>
                             </div>
                             <div className={"div-ten-inner"}>
-                                <CardColor color={this.props.color}/>
+                                <CardColor shape={this.props.shape}/>
                             </div>
                         </div>
                         <div className={"div-ten-outer"}>
                             <div className={"div-ten-inner down-shifted"}>
-                                <CardColor color={this.props.color}/>
+                                <CardColor shape={this.props.shape}/>
                             </div>
                             <div className={"div-ten-inner down-shifted"}>
-                                <CardColor color={this.props.color}/>
+                                <CardColor shape={this.props.shape}/>
                             </div>
                         </div>
                         <div className={"div-ten-outer"}>
                             <div className={"div-ten-inner"}>
-                                <CardColor color={this.props.color}/>
+                                <CardColor shape={this.props.shape}/>
                             </div>
                             <div className={"div-ten-inner"}>
-                                <CardColor color={this.props.color}/>
+                                <CardColor shape={this.props.shape}/>
                             </div>
                             <div className={"div-ten-inner"}>
-                                <CardColor color={this.props.color}/>
+                                <CardColor shape={this.props.shape}/>
                             </div>
                             <div className={"div-ten-inner"}>
-                                <CardColor color={this.props.color}/>
+                                <CardColor shape={this.props.shape}/>
                             </div>
                         </div>
                     </div>
                 );
             case 11:
-            switch (this.props.color) {
+            switch (this.props.shape) {
                 case "spades":
                     return (
                         <div className={"card-middle-column"}>
@@ -277,7 +277,7 @@ export default class CardMiddle extends React.Component {
                 case "diams":
                     return (
                         <div className={"card-middle-column"}>
-                            <img alt='jackDiams' style={{width: '100%', height: '100%'}} src={jackDiams}>
+                            <img alt='jackDiamonds' style={{width: '100%', height: '100%'}} src={jackDiamonds}>
                             </img>
                         </div>
                     );
@@ -301,7 +301,7 @@ export default class CardMiddle extends React.Component {
                     )
             }
             case 12:
-                switch (this.props.color) {
+                switch (this.props.shape) {
                     case "spades":
                         return (
                             <div className={"card-middle-column"}>
@@ -312,7 +312,7 @@ export default class CardMiddle extends React.Component {
                     case "diams":
                         return (
                             <div className={"card-middle-column"}>
-                                <img alt='queenDiams' style={{width: '100%', height: '100%'}} src={queenDiams}>
+                                <img alt='queenDiamonds' style={{width: '100%', height: '100%'}} src={queenDiamonds}>
                                 </img>
                             </div>
                         );
@@ -336,7 +336,7 @@ export default class CardMiddle extends React.Component {
                         )
                 }
             case 13:
-                switch (this.props.color) {
+                switch (this.props.shape) {
                     case "spades":
                         return (
                             <div className={"card-middle-column"}>
@@ -347,7 +347,7 @@ export default class CardMiddle extends React.Component {
                     case "diams":
                         return (
                             <div className={"card-middle-column"}>
-                                <img alt='kingDiams' style={{width: '100%', height: '100%'}} src={kingDiams}>
+                                <img alt='kingDiamonds' style={{width: '100%', height: '100%'}} src={kingDiamonds}>
                                 </img>
                             </div>
                         );

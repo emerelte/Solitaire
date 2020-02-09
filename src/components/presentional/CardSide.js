@@ -9,9 +9,9 @@ export default class CardSide extends React.Component {
         return (
             <div className={"card-side-part"}>
                 <CardValue value={this.props.value}/>
-                <CardColor fontSize={'1.5vw'} color={this.props.color}/>
+                <CardColor fontSize={'1.5vw'} shape={this.props.shape}/>
                 <div className={"card-side-middle"}/>
-                <CardColor fontSize={'1.5vw'} color={this.props.color}/>
+                <CardColor fontSize={'1.5vw'} shape={this.props.shape}/>
                 <CardValue value={this.props.value}/>
             </div>
         )
