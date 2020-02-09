@@ -4,6 +4,7 @@ import Typography from "@material-ui/core/Typography";
 import Slider from "@material-ui/core/Slider";
 import Button from "@material-ui/core/Button";
 import PropTypes from "prop-types";
+import {initializeGame} from "./HelperFunctions";
 
 const marks = [
     {
@@ -31,7 +32,8 @@ export default class GameStatusForm extends React.Component {
     };
 
     handleClick = () => {
-        this.props.notify(this.gameLevel);
+        const dealedCards = initializeGame(this.gameLevel);
+        this.props.notify(this.gameLevel, dealedCards.tableauPiles, dealedCards.stock);
     };
 
     render = () => {

@@ -9,14 +9,15 @@ import {idOfEmptyTarget} from "../Constants";
 
 const cardsOnTheTable = (state = {}, action) => {
     console.log(action.type);
+    //todo delete writing the same state
     switch (action.type) {
         case "INIT_GAME":
             return {
                 tableauPiles: action.tableauPiles,
-                foundations: Array.from({length: 4}, e => []),
+                foundations: Array.from({length: mapGameLevelToGameSetup(action.gameLevel).nrOfSuites}, e => []),
                 stock: action.stock,
                 tableauTargets: Array(mapGameLevelToGameSetup(action.gameLevel).nrOfCols).fill({'id': idOfEmptyTarget}),
-                foundationsTargets: Array(4).fill({'id': idOfEmptyTarget})
+                foundationsTargets: Array(mapGameLevelToGameSetup(action.gameLevel).nrOfSuites).fill({'id': idOfEmptyTarget})
             };
         case "DEAL_CARDS":
             return {

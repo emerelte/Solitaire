@@ -111,7 +111,6 @@ export const formatReadableTimeFromMiliseconds = (p_timeInMiliseconds) => {
 };
 
 export const isRightCardToPlaceInTarget = (p_card, p_lastTargetCard) => {
-    console.log(p_lastTargetCard);
     if (p_lastTargetCard === undefined) {
         if (isAce(p_card))
             return true;
