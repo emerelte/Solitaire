@@ -1,5 +1,10 @@
 import PropTypes from "prop-types";
-import {createFoundationsTargets, createTableauTargets, mapGameLevelToGameSetup} from "../HelperFunctions";
+import {
+    createFoundationsTargets,
+    createTableauTargets,
+    getListOfBoundCards,
+    mapGameLevelToGameSetup
+} from "../HelperFunctions";
 import {idOfEmptyTarget} from "../Constants";
 
 const cardsOnTheTable = (state = {}, action) => {
@@ -34,6 +39,28 @@ const cardsOnTheTable = (state = {}, action) => {
         case "DELETE_TARGETS":
             return {
                 tableauPiles: state.tableauPiles,
+                foundations: state.foundations,
+                stock: state.stock,
+                tableauTargets: Array(state.tableauPiles.length).fill({'id': idOfEmptyTarget}),
+                foundationsTargets: Array(state.foundations.length).fill({'id': idOfEmptyTarget})
+            };
+        case "MOVE_TO_FOUNDATIONS":
+            return {
+                tableauPiles: state.tableauPiles.map(k => k.filter(e => e.id !== action.cardToMove.id)),
+                foundations: state.foundations.map((column, index) => (
+                    index === action.foundationIndex ? [...column, action.cardToMove] : [...column]
+                )),
+                stock: state.stock,
+                tableauTargets: Array(state.tableauPiles.length).fill({'id': idOfEmptyTarget}),
+                foundationsTargets: Array(state.foundations.length).fill({'id': idOfEmptyTarget})
+            };
+        case "MOVE_BETWEEN_PILES":
+            const boundCards = getListOfBoundCards(action.cardToMove, state.tableauPiles);
+            return {
+                tableauPiles: state.tableauPiles.map(k => k.filter(e => !boundCards.includes(e)))
+                                                .map((pile, index) => (
+                    index === action.destPileIdx ? [...pile, ...boundCards] : [...pile]
+                )),
                 foundations: state.foundations,
                 stock: state.stock,
                 tableauTargets: Array(state.tableauPiles.length).fill({'id': idOfEmptyTarget}),

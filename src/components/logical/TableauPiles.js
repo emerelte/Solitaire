@@ -11,7 +11,7 @@ import CardStack from "./CardStack";
 import {idOfEmptyTarget} from "../../Constants";
 import {calculateTopPositionOfColumnTarget} from "../../HelperFunctions";
 import Target from "../../Target";
-import {createTargets, deleteTargets} from "../../actions";
+import {createTargets, deleteTargets, moveCardBetweenPiles, moveCardToFoundations} from "../../actions";
 
 const mapStateToProps = (state) => ({
     tableauPiles: state.cardsOnTheTable.tableauPiles,
@@ -20,10 +20,11 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     createTargets: (card) => dispatch(createTargets(card)),
-    deleteTargets: (card) => dispatch(deleteTargets())
+    deleteTargets: () => dispatch(deleteTargets()),
+    moveCardBetweenPiles: (card, dstPileIdx) => dispatch(moveCardBetweenPiles(card, dstPileIdx))
 });
 
-const TableauPiles = ({tableauPiles, tableauTargets, createTargets, deleteTargets}) => (
+const TableauPiles = ({tableauPiles, tableauTargets, createTargets, deleteTargets, moveCardBetweenPiles}) => (
     <div className="row-with-card-columns">
         {tableauPiles.map((column, colInd) => (
             <div key={colInd} style={{position: "relative", height: "0px"}}
@@ -40,8 +41,7 @@ const TableauPiles = ({tableauPiles, tableauTargets, createTargets, deleteTarget
                          top: "" + calculateTopPositionOfColumnTarget(column.length) + "vw"
                      }}>
                     <Target
-                        // moveCard={(src, dst) => this.props.gameManager.moveCardsToDestColumn(src, dst)}
-                        moveCard={(src, dst) => {}}
+                        moveCard={(card, dstPileIdx) => moveCardBetweenPiles(card, dstPileIdx)}
                         id={colInd}/></div>
                 : <div/>
         }

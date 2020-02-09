@@ -7,8 +7,6 @@ import {areCardsInRightOrder, showCard} from '../../HelperFunctions'
 
 const itemSource = {
     beginDrag(props) {
-        console.log("XD: ", props.createTargets);
-        console.log(props.cardsInColumn[0]);
         props.createTargets(props.cardsInColumn[0]);
         return props.cardsInColumn[0];
     },

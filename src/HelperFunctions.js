@@ -124,7 +124,7 @@ export const isRightCardToPlaceInTarget = (p_card, p_lastTargetCard) => {
 };
 
 export const calculateTopPositionOfColumnTarget = (p_columnLength) => {
-    return p_columnLength === 0 ? 0 : (p_columnLength-1) * (9.4 * 0.15);
+    return p_columnLength === 0 ? 0 : (p_columnLength - 1) * (9.4 * 0.15);
 };
 
 export const initializeGame = (p_gameLevel) => {
@@ -172,3 +172,36 @@ export const createFoundationsTargets = (card, foundations, prevFoundationsTarge
     });
     return foundationsTargets
 };
+
+const getCardAt = (tableauPiles, colIdx, rowIdx) => {
+    return tableauPiles[colIdx][rowIdx];
+};
+
+const getCardCoords = (tableauPiles, card) => {
+    for (let i = 0; i < tableauPiles.length; ++i) {
+        if (tableauPiles[i].indexOf(card) !== -1)
+            return {"column": i, "row": tableauPiles[i].indexOf(card)};
+    }
+    return {"column": -1, "row": -1};
+};
+
+export const getListOfBoundCards = (card, tableauPiles) => {
+    let sourceCardCoords = getCardCoords(tableauPiles, card);
+    let column = sourceCardCoords.column;
+    let row = sourceCardCoords.row;
+    let boundCards = [];
+    while (row < tableauPiles[column].length) {
+        boundCards.push(getCardAt(tableauPiles, column, row));
+        row++;
+    }
+    return boundCards;
+};
+
+// export const moveCardsToDestColumn = (startingCard, destCol) => {
+//     let cardsToMove = this.getListOfBoundCards(startingCard);
+//     for (let i = 0; i < cardsToMove.length; ++i) {
+//         this.moveCardToColumn(cardsToMove[i], destCol);
+//     }
+//     this.deleteTargets();
+//     this.incrementMovesCounter();
+// };

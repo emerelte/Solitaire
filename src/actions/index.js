@@ -17,3 +17,15 @@ export const createTargets = (cardToMove) => ({
 export const deleteTargets = () => ({
     type: "DELETE_TARGETS",
 });
+
+export const moveCardToFoundations = (cardToMove, foundationIndex) => ({
+    type: "MOVE_TO_FOUNDATIONS",
+    cardToMove: cardToMove,
+    foundationIndex: foundationIndex
+});
+
+export const moveCardBetweenPiles = (cardToMove, destPileIdx) => ({
+    type: "MOVE_BETWEEN_PILES",
+    cardToMove: cardToMove,
+    destPileIdx: destPileIdx
+});

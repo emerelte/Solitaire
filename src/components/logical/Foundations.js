@@ -6,7 +6,7 @@ import {CardDeck} from "../presentional/CardDeck";
 import '../../style/BottomCards.css'
 import '../../style/CardDeck.css'
 import {idOfEmptyTarget} from "../../Constants";
-import {dealNextCards} from "../../actions";
+import {dealNextCards, moveCardToFoundations} from "../../actions";
 
 const mapStateToProps = (state) => ({
     foundations: state.cardsOnTheTable.foundations,
@@ -15,10 +15,11 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    dealNextCards: () => dispatch(dealNextCards())
+    dealNextCards: () => dispatch(dealNextCards()),
+    moveCardToFoundations: (src, dst) => dispatch(moveCardToFoundations(src, dst))
 });
 
-const Foundations = ({foundations, stock, foundationsTargets, dealNextCards}) => {
+const Foundations = ({foundations, stock, foundationsTargets, dealNextCards, moveCardToFoundations}) => {
     return (
         <div className="bottom-cards">
             {
@@ -30,9 +31,7 @@ const Foundations = ({foundations, stock, foundationsTargets, dealNextCards}) =>
                             foundationsTargets[index]['id'] !== idOfEmptyTarget ?
                                 <div className={"target-box"} key={index}>
                                     <Target
-                                        // moveCard={(src, dst) => this.props.gameManager.moveCardToBottomColumn(src, dst)}
-                                        moveCard={(src, dst) => () => {
-                                        }} // todo add functionality
+                                        moveCard={(src, dst) => moveCardToFoundations(src, dst)}
                                         id={index}/>
                                 </div> : <div/>
                         }
