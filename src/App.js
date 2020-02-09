@@ -20,12 +20,6 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const App = ({hasGameStarted, initGame}) => {
-    //TODO start timer when the game begins
-    // if (this.state.hasGameStarted) {
-    //     setInterval(function () {
-    //         this.setState({curTime: new Date().getTime()});
-    //     }.bind(this), 1000);
-    // }
     return (
         !hasGameStarted ?
             <GameStatusForm notify={(gameLevel, tableauPiles, stock) => initGame(gameLevel, tableauPiles, stock)}/> :

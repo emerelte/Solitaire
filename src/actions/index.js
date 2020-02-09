@@ -29,3 +29,7 @@ export const moveCardBetweenPiles = (cardToMove, destPileIdx) => ({
     cardToMove: cardToMove,
     destPileIdx: destPileIdx
 });
+
+export const updateTimer = () => ({
+    type: "UPDATE_TIMER"
+});

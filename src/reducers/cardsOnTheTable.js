@@ -54,7 +54,7 @@ const cardsOnTheTable = (state = {}, action) => {
                 )),
             };
         default:
-            return {tableauPiles: [], foundations: [], stock: [], tableauTargets: [], foundationsTargets: []}
+            return state;
     }
 };
 
