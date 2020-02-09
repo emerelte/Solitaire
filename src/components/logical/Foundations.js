@@ -10,14 +10,15 @@ import {dealNextCards} from "../../actions";
 
 const mapStateToProps = (state) => ({
     foundations: state.cardsOnTheTable.foundations,
-    stock: state.cardsOnTheTable.stock
+    stock: state.cardsOnTheTable.stock,
+    foundationsTargets: state.cardsOnTheTable.foundationsTargets
 });
 
 const mapDispatchToProps = (dispatch) => ({
     dealNextCards: () => dispatch(dealNextCards())
 });
 
-const Foundations = ({foundations, stock, dealNextCards}) => {
+const Foundations = ({foundations, stock, foundationsTargets, dealNextCards}) => {
     return (
         <div className="bottom-cards">
             {
@@ -26,7 +27,7 @@ const Foundations = ({foundations, stock, dealNextCards}) => {
                         <CardDeck
                             cards={cardList}/>
                         {
-                            foundations[index]['id'] !== idOfEmptyTarget ?
+                            foundationsTargets[index]['id'] !== idOfEmptyTarget ?
                                 <div className={"target-box"} key={index}>
                                     <Target
                                         // moveCard={(src, dst) => this.props.gameManager.moveCardToBottomColumn(src, dst)}

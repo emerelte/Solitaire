@@ -11,20 +11,26 @@ import CardStack from "./CardStack";
 import {idOfEmptyTarget} from "../../Constants";
 import {calculateTopPositionOfColumnTarget} from "../../HelperFunctions";
 import Target from "../../Target";
+import {createTargets, deleteTargets} from "../../actions";
 
 const mapStateToProps = (state) => ({
     tableauPiles: state.cardsOnTheTable.tableauPiles,
-    tableauTargets: state.tableauTargets
+    tableauTargets: state.cardsOnTheTable.tableauTargets
 });
 
-const TableauPiles = ({tableauPiles, tableauTargets}) => (
+const mapDispatchToProps = (dispatch) => ({
+    createTargets: (card) => dispatch(createTargets(card)),
+    deleteTargets: (card) => dispatch(deleteTargets())
+});
+
+const TableauPiles = ({tableauPiles, tableauTargets, createTargets, deleteTargets}) => (
     <div className="row-with-card-columns">
         {tableauPiles.map((column, colInd) => (
             <div key={colInd} style={{position: "relative", height: "0px"}}
                  className={"solitaire-column"}>
         <CardStack
-            deleteTargets={() => {}}
-            createTargets={() => {}}
+            deleteTargets={deleteTargets}
+            createTargets={(card) => createTargets(card)}
             cardsInColumn={column}/>
         {
             tableauTargets[colInd]['id'] !== idOfEmptyTarget ?
@@ -62,5 +68,6 @@ TableauPiles.propTypes = {
 };
 
 export default connect(
-    mapStateToProps
+    mapStateToProps,
+    mapDispatchToProps
 )(TableauPiles)

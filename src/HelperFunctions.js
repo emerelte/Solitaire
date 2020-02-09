@@ -1,4 +1,5 @@
 import {easy, medium, hard} from "./GameSetups";
+import {idOfEmptyTarget, idOfTargetOfEmptyColumn} from "./Constants";
 
 export const findFontColor = (card) => {
     return card.color === 'spades' || card.color === 'clubs' ? 'black' : 'red';
@@ -110,6 +111,7 @@ export const formatReadableTimeFromMiliseconds = (p_timeInMiliseconds) => {
 };
 
 export const isRightCardToPlaceInTarget = (p_card, p_lastTargetCard) => {
+    console.log(p_lastTargetCard);
     if (p_lastTargetCard === undefined) {
         if (isAce(p_card))
             return true;
@@ -136,9 +138,37 @@ export const initializeGame = (p_gameLevel) => {
         showCard(cardsInColumn[cardsInColumn.length - 1]);
         tableauPiles.push(cardsInColumn);
     }
-    console.log(tableauPiles);
     return {
         tableauPiles: tableauPiles,
         stock: stock
     }
+};
+
+export const createTableauTargets = (card, tableauPiles) => {
+    let tableauTargets = [];
+    tableauPiles.forEach((column, index) => {
+            if (column.length === 0) {
+                if (isKing(card))
+                    tableauTargets.push({'id': idOfTargetOfEmptyColumn});
+                else
+                    tableauTargets.push({'id': idOfEmptyTarget});
+            } else if (isPossibleToMoveCardBetweenColumns(card, column[column.length - 1]))
+                tableauTargets.push({'id': column[column.length - 1].id});
+            else
+                tableauTargets.push({'id': idOfEmptyTarget});
+        }
+    );
+    return tableauTargets;
+};
+
+export const createFoundationsTargets = (card, foundations, prevFoundationsTargets) => {
+    let foundationsTargets = [];
+    prevFoundationsTargets.forEach((column, index) => {
+        if (isRightCardToPlaceInTarget(card, foundations[index][foundations[index].length - 1])) {
+            foundationsTargets.push({'id': index});
+        } else {
+            foundationsTargets.push({'id': idOfEmptyTarget})
+        }
+    });
+    return foundationsTargets
 };
