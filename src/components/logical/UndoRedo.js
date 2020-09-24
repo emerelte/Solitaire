@@ -1,16 +1,17 @@
 import React from "react";
+import Button from '@material-ui/core/Button';
 import {connect} from 'react-redux'
 import {ActionCreators as UndoActionCreators} from 'redux-undo'
 
 
 let UndoRedo = ({canUndo, canRedo, onUndo, onRedo}) => (
     <p>
-        <button onClick={onUndo} disabled={!canUndo}>
+        <Button onClick={onUndo} disabled={!canUndo}>
             Undo
-        </button>
-        <button onClick={onRedo} disabled={!canRedo}>
+        </Button>
+        <Button onClick={onRedo} disabled={!canRedo}>
             Redo
-        </button>
+        </Button>
     </p>
 )
 

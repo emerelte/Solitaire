@@ -6,13 +6,14 @@ import {
 } from "../HelperFunctions";
 import undoable, {includeAction} from 'redux-undo';
 import {idOfInvalidTarget, undoableActions} from "../Constants";
+import _ from "lodash"
 
 const cardsOnTheTable = (state = {}, action) => {
     switch (action.type) {
         case "INIT_GAME":
             return {
                 tableauPiles: action.tableauPiles,
-                foundations: Array.from({length: mapGameLevelToGameSetup(action.gameLevel).nrOfSuites}, e => []),
+                foundations: Array.from({length: mapGameLevelToGameSetup(action.gameLevel).nrOfSuites}, () => []),
                 stock: action.stock,
                 tableauTargets: Array(mapGameLevelToGameSetup(action.gameLevel).nrOfCols).fill({'id': idOfInvalidTarget}),
                 foundationsTargets: Array(mapGameLevelToGameSetup(action.gameLevel).nrOfSuites).fill({'id': idOfInvalidTarget})
@@ -40,7 +41,7 @@ const cardsOnTheTable = (state = {}, action) => {
         case "MOVE_TO_FOUNDATION":
             return {
                 ...state,
-                tableauPiles: state.tableauPiles.map(k => k.filter(e => e.id !== action.cardToMove.id)),
+                tableauPiles: state.tableauPiles.map(k => _.cloneDeep(k.filter(e => e.id !== action.cardToMove.id))),
                 foundations: state.foundations.map((column, index) => (
                     index === action.foundationIndex ? [...column, action.cardToMove] : [...column]
                 )),
@@ -49,7 +50,7 @@ const cardsOnTheTable = (state = {}, action) => {
             const boundCards = getListOfBoundCards(action.cardToMove, state.tableauPiles);
             return {
                 ...state,
-                tableauPiles: state.tableauPiles.map(k => k.filter(e => !boundCards.includes(e)))
+                tableauPiles: state.tableauPiles.map(k => _.cloneDeep(k.filter(e => !boundCards.includes(e))))
                     .map((pile, index) => (
                         index === action.destPileIdx ? [...pile, ...boundCards] : [...pile]
                     )),
