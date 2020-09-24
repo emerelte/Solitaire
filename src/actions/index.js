@@ -5,6 +5,10 @@ export const initGame = (gameLevel, tableauPiles, stock) => ({
     stock: stock
 });
 
+export const goToMenu = () => ({
+    type: "GO_TO_MENU"
+});
+
 export const dealNextCards = () => ({
     type: "DEAL_CARDS"
 });

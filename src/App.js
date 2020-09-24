@@ -6,8 +6,9 @@ import CardColumns from "./components/logical/TableauPiles";
 import FoundationsAndStock from "./components/logical/FoundationsAndStock";
 import TimeAndCounterIndicator from "./components/logical/TimeAndCounterIndicator";
 import UndoButton from "./components/logical/UndoButton";
+import MenuButton from "./components/logical/MenuButton";
 import GameStatusForm from "./components/logical/GameStatusForm";
-import {initGame} from "./actions";
+import {goToMenu, initGame} from "./actions";
 import './style/App.css';
 import './style/CardDeck.css';
 
@@ -16,10 +17,11 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    initGame: (gameLevel, tableauPiles, stock) => dispatch(initGame(gameLevel, tableauPiles, stock))
+    initGame: (gameLevel, tableauPiles, stock) => dispatch(initGame(gameLevel, tableauPiles, stock)),
+    goToMenu: () => dispatch(goToMenu())
 });
 
-const App = ({hasGameStarted, initGame}) => {
+const App = ({hasGameStarted, initGame, goToMenu}) => {
     return (
         !hasGameStarted ?
             <GameStatusForm notify={(gameLevel, tableauPiles, stock) => initGame(gameLevel, tableauPiles, stock)}/> :
@@ -29,7 +31,10 @@ const App = ({hasGameStarted, initGame}) => {
                     <TimeAndCounterIndicator/>
                     <FoundationsAndStock/>
                 </div>
-                <UndoButton/>
+                <div>
+                    <MenuButton goToMenuCallback={() => goToMenu()}/>
+                    <UndoButton/>
+                </div>
             </div>
     );
 };
