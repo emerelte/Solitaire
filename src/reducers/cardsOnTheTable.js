@@ -4,7 +4,8 @@ import {
     getListOfBoundCards,
     mapGameLevelToGameSetup
 } from "../HelperFunctions";
-import {idOfInvalidTarget} from "../Constants";
+import undoable, {includeAction} from 'redux-undo';
+import {idOfInvalidTarget, undoableActions} from "../Constants";
 
 const cardsOnTheTable = (state = {}, action) => {
     switch (action.type) {
@@ -49,16 +50,17 @@ const cardsOnTheTable = (state = {}, action) => {
             return {
                 ...state,
                 tableauPiles: state.tableauPiles.map(k => k.filter(e => !boundCards.includes(e)))
-                                                .map((pile, index) => (
-                    index === action.destPileIdx ? [...pile, ...boundCards] : [...pile]
-                )),
+                    .map((pile, index) => (
+                        index === action.destPileIdx ? [...pile, ...boundCards] : [...pile]
+                    )),
             };
         default:
             return state;
     }
 };
 
+const undoableCardsOnTheTable = undoable(cardsOnTheTable, {
+    filter: includeAction(undoableActions)
+})
 
-
-
-export default cardsOnTheTable
+export default undoableCardsOnTheTable

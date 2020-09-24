@@ -10,3 +10,5 @@ export const CardType = PropTypes.shape({
     id: PropTypes.number,
     value: PropTypes.number
 });
+
+export const undoableActions = ["DEAL_CARDS", "MOVE_TO_FOUNDATION", "MOVE_BETWEEN_PILES"];

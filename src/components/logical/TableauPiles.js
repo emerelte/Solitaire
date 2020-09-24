@@ -8,8 +8,8 @@ import Target from "./Target";
 import {createTargets, deleteTargets, moveCardBetweenPiles} from "../../actions";
 
 const mapStateToProps = (state) => ({
-    tableauPiles: state.cardsOnTheTable.tableauPiles,
-    tableauTargets: state.cardsOnTheTable.tableauTargets
+    tableauPiles: state.cardsOnTheTable.present.tableauPiles,
+    tableauTargets: state.cardsOnTheTable.present.tableauTargets
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -5,19 +5,24 @@ import {connect} from "react-redux";
 import CardColumns from "./components/logical/TableauPiles";
 import FoundationsAndStock from "./components/logical/FoundationsAndStock";
 import TimeAndCounterIndicator from "./components/logical/TimeAndCounterIndicator";
-import UndoButton from "./components/logical/UndoButton";
+import UndoRedo from "./components/logical/UndoRedo";
 import MenuButton from "./components/logical/MenuButton";
 import GameStatusForm from "./components/logical/GameStatusForm";
 import {goToMenu, initGame} from "./actions";
 import './style/App.css';
 import './style/CardDeck.css';
+import {ActionCreators as UndoActionCreators} from 'redux-undo'
+
 
 const mapStateToProps = (state) => ({
     hasGameStarted: state.hasGameStarted
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    initGame: (gameLevel, tableauPiles, stock) => dispatch(initGame(gameLevel, tableauPiles, stock)),
+    initGame: (gameLevel, tableauPiles, stock) => {
+        dispatch(initGame(gameLevel, tableauPiles, stock));
+        dispatch(UndoActionCreators.clearHistory())
+    },
     goToMenu: () => dispatch(goToMenu())
 });
 
@@ -33,7 +38,7 @@ const App = ({hasGameStarted, initGame, goToMenu}) => {
                 </div>
                 <div>
                     <MenuButton goToMenuCallback={() => goToMenu()}/>
-                    <UndoButton/>
+                    <UndoRedo/>
                 </div>
             </div>
     );

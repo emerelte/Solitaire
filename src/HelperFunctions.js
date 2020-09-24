@@ -88,7 +88,6 @@ const convertMinutesToHours = (minutes) => {
 
 export const formatReadableTimeFromMs = (timeInMiliseconds) => {
     let formattedTime = "";
-    console.log(timeInMiliseconds);
     const seconds = timeInMiliseconds.getSeconds();
     const minutes = timeInMiliseconds.getMinutes();
     const hours = timeInMiliseconds.getHours() + convertMinutesToHours(timeInMiliseconds.getTimezoneOffset());

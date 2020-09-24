@@ -9,9 +9,9 @@ import '../../style/BottomCards.css'
 import '../../style/CardDeck.css'
 
 const mapStateToProps = (state) => ({
-    foundations: state.cardsOnTheTable.foundations,
-    stock: state.cardsOnTheTable.stock,
-    foundationsTargets: state.cardsOnTheTable.foundationsTargets
+    foundations: state.cardsOnTheTable.present.foundations,
+    stock: state.cardsOnTheTable.present.stock,
+    foundationsTargets: state.cardsOnTheTable.present.foundationsTargets
 });
 
 const mapDispatchToProps = (dispatch) => ({
