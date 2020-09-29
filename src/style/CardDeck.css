@@ -1,9 +1,10 @@
 .card-deck {
     justify-content: center;
     width: 7vw;
-    height: 9.95vw;
+    height: 9.2vw;
     border: solid black;
     margin: 50px;
+    padding-bottom: 10px;
 }
 
 .rest-of-cards:hover {

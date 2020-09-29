@@ -1,5 +1,5 @@
 import {easy, medium, hard} from "./GameSetups";
-import {coordsOfNonExistingCard, idOfInvalidTarget, idOfTargetOfEmptyColumn} from "./Constants";
+import {cardsInStockDistance, coordsOfNonExistingCard, idOfInvalidTarget, idOfTargetOfEmptyColumn} from "./Constants";
 
 export const findFontColor = (card) => {
     return card.shape === 'spades' || card.shape === 'clubs' ? 'black' : 'red';
@@ -122,8 +122,10 @@ const isRightCardToPlaceInTarget = (card, lastTargetCard) => {
     return false;
 };
 
-export const calculateTopPositionOfColumnTarget = (columnLength) => {
-    return columnLength === 0 ? 0 : (columnLength - 1) * (9.4 * 0.15);
+export const calculatePositionOfColumnTarget = (columnLength) => {
+    const magicAlignmentFactor = 3;
+    let positionOfColumnTarget = columnLength === 0 ? cardsInStockDistance : columnLength * cardsInStockDistance - magicAlignmentFactor;
+    return "" + positionOfColumnTarget + "px";
 };
 
 export const initializeGame = (gameLevel) => {

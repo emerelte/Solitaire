@@ -12,3 +12,5 @@ export const CardType = PropTypes.shape({
 });
 
 export const undoableActions = ["DEAL_CARDS", "MOVE_TO_FOUNDATION", "MOVE_BETWEEN_PILES"];
+
+export const cardsInStockDistance = 30;

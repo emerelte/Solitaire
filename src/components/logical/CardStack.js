@@ -5,6 +5,7 @@ import Card from '../presentional/Card.js'
 import {areCardsInRightOrder, showCard} from '../../HelperFunctions'
 import '../../style/Card.css';
 import {CardType} from "../../Constants";
+import '../../style/CardStack.css';
 
 const itemSource = {
     beginDrag(props) {
@@ -53,7 +54,7 @@ class CardStack extends React.Component {
             showCard(bottomCard);
 
         if (bottomCard.hidden)
-            return <div style={{position: "absolute", top: "15%"}}>
+            return <div className={"card-in-stack"}>
                 <Card card={bottomCard}/>
                 <DragItemContainer deleteTargets={() => this.props.deleteTargets()}
                                    createTargets={this.props.createTargets}
@@ -62,14 +63,14 @@ class CardStack extends React.Component {
         else {
             if (areCardsInRightOrder(this.props.cardsInStack))
                 return connectDragSource(
-                    <div className={"draggable"} style={{position: "absolute", top: "15%"}}>
+                    <div className={"draggable card-in-stack"}>
                         <Card card={bottomCard}/>
                         <DragItemContainer deleteTargets={() => this.props.deleteTargets()}
                                            createTargets={this.props.createTargets}
                                            cardsInStack={this.props.cardsInStack.slice(1, this.props.cardsInStack.length)}/>
                     </div>);
             else {
-                return <div style={{position: "absolute", top: "15%"}}>
+                return <div className={"card-in-stack"}>
                     <Card card={bottomCard}/>
                     <DragItemContainer deleteTargets={() => this.props.deleteTargets()}
                                        createTargets={this.props.createTargets}

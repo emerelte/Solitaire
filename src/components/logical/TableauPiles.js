@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import PropTypes from 'prop-types'
 import CardStack from "./CardStack";
 import {CardType, idOfInvalidTarget} from "../../Constants";
-import {calculateTopPositionOfColumnTarget} from "../../HelperFunctions";
+import {calculatePositionOfColumnTarget} from "../../HelperFunctions";
 import Target from "./Target";
 import {createTargets, deleteTargets, moveCardBetweenPiles} from "../../actions";
 
@@ -32,7 +32,7 @@ const TableauPiles = ({tableauPiles, tableauTargets, createTargets, deleteTarget
                         <div className={"card-box"}
                              style={{
                                  position: "relative",
-                                 top: "" + calculateTopPositionOfColumnTarget(column.length) + "vw"
+                                 top: calculatePositionOfColumnTarget(column.length)
                              }}>
                             <Target
                                 moveCard={(card, dstPileIdx) => moveCardBetweenPiles(card, dstPileIdx)}

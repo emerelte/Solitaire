@@ -1,5 +1,6 @@
 .target {
     width: 7vw;
-    height: 9.95vw;
+    height: 9.2vw;
+    padding-bottom: 10px;
     border: solid lightgreen;
 }
