@@ -40,7 +40,7 @@
     ]
   },
   "devDependencies": {
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "prop-types": "^15.7.2",
     "redux-undo": "^1.0.1"
   }
